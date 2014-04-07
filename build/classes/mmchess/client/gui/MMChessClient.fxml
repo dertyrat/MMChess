@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="root" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="696.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mmchess.client.controller.Controller">
+  <children>
+    <MenuBar useSystemMenuBar="false" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Quit" fx:id="miFileQuit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane prefHeight="556.0" prefWidth="696.0" VBox.vgrow="ALWAYS">
+      <children>
+        <GridPane alignment="CENTER" gridLinesVisible="false" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="78.0">
+          <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BRW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BNB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BBW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BQB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BKW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BBB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BNW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="0">
+              <image>
+                <Image url="@images/BRB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+              <image>
+                <Image url="@images/BPB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <image>
+                <Image url="@images/BPW.png" fx:id="x6" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <image>
+                <Image url="@images/BPB.png" fx:id="x7" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x6" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x7" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x6" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x7" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+              <image>
+                <Image url="@images/BPW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
+              <image>
+                <Image url="@images/EmptyW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <image>
+                <Image url="@images/EmptyB.png" fx:id="x3" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+              <image>
+                <Image url="@images/EmptyW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+              <image>
+                <Image url="@images/EmptyW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
+              <image>
+                <Image url="@images/EmptyW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
+              <image>
+                <Image url="@images/EmptyB.png" fx:id="x4" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+              <image>
+                <Image url="@images/EmptyW.png" fx:id="x5" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
+              <image>
+                <Image url="@images/EmptyB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" image="$x5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
+              <image>
+                <Image url="@images/WPB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WRB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WNW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WBB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WQW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WKB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WBW.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WNB.png" />
+              </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7">
+              <image>
+                <Image url="@images/WRW.png" />
+              </image>
+            </ImageView>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+          </rowConstraints>
+        </GridPane>
+        <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="400.0" prefWidth="140.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="542.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="78.0">
+          <content>
+            <ListView prefHeight="400.0" prefWidth="137.0" />
+          </content>
+        </ScrollPane>
+        <FlowPane prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="278.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="582.0" AnchorPane.topAnchor="78.0" />
+        <FlowPane prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="582.0" AnchorPane.topAnchor="278.0" />
+        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="492.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="518.0" AnchorPane.topAnchor="14.0">
+          <image>
+            <Image url="@images/IconB.png" />
+          </image>
+        </ImageView>
+        <Label prefHeight="50.0" prefWidth="265.0" text="Remote Player (Rating)" AnchorPane.bottomAnchor="492.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="14.0">
+          <font>
+            <Font size="18.0" fx:id="x1" />
+          </font>
+        </Label>
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="512.0" AnchorPane.leftAnchor="498.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="14.0">
+          <image>
+            <Image url="@images/TurnIcon_Red.png" />
+          </image>
+        </ImageView>
+        <Label prefHeight="20.0" prefWidth="75.0" text="MM:SS.000" textAlignment="RIGHT" AnchorPane.bottomAnchor="492.0" AnchorPane.leftAnchor="453.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="44.0">
+          <font>
+            <Font name="System Bold" size="14.0" fx:id="x2" />
+          </font>
+        </Label>
+        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="518.0" AnchorPane.topAnchor="492.0">
+          <image>
+            <Image url="@images/IconW.png" />
+          </image>
+        </ImageView>
+        <Label font="$x1" prefHeight="50.0" prefWidth="265.0" text="Local Player (Rating)" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="492.0" />
+        <Label font="$x2" prefHeight="20.0" prefWidth="75.0" text="MM:SS.000" textAlignment="RIGHT" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="453.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="522.0" />
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="498.0" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="492.0">
+          <image>
+            <Image url="@images/TurnIcon_Green.png" />
+          </image>
+        </ImageView>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
