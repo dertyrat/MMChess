@@ -16,6 +16,7 @@ public class MMChessServer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.printf("Matt smells");
         // TODO code application logic here
     }
     
