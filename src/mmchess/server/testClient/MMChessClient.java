@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package mmchess.server;
+package mmchess.server.testClient;
 
 /**
  * @author Travis Meares
@@ -15,7 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class MMChessServer {
+public class MMChessClient {
     public static void main(String[] args) throws IOException {
         ServerSocket listener = new ServerSocket(8888); // listens for connections
 
