@@ -1,18 +1,12 @@
 package mmchess.server.testClient;
 
-/**
- * @author Travis Meares
- */
-
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-
 /**
  * @author Travis Meares
  */
-
 public class MMChessClient {
     public static void main(String[] args) {
         final int PORT = 8888;      //must match server port number
@@ -25,14 +19,27 @@ public class MMChessClient {
             Scanner fromServer = new Scanner(socket.getInputStream());
             PrintWriter toServer = new PrintWriter(socket.getOutputStream());
 
-            String msg = "";
-            while (!msg.equals("EXIT")) {
+            String serverCommand = fromServer.nextLine();
+            System.out.printf("Server sent: %s\n", serverCommand);
+            String name;
+            while (serverCommand.equals("LOG")) {
+                System.out.printf("Enter your name: ");
+                name = sc.nextLine();
+                toServer.println(name);
+                toServer.flush();
+                serverCommand = fromServer.nextLine();
+            }
+
+            System.out.printf("Server sent: %s\n", serverCommand);
+
+            String msg;
+            do {
                 System.out.printf("Message for server: ");
                 msg = sc.nextLine();
                 toServer.println(msg);
                 toServer.flush();
                 System.out.printf("sent\n");
-            }
+            } while (!msg.equals("EXIT"));
 
             System.out.printf("Goodbye");
             socket.close();
