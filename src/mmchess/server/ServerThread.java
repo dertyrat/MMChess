@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * @author Travis Meares
  */
-public class ServerThread extends Thread {
+public class ServerThread implements Runnable {
     private Socket socket;
     private Scanner fromClient;          // gets input from the socket
     private PrintWriter toClient;        // writes to the socket

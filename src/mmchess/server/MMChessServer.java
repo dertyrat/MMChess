@@ -14,7 +14,7 @@ public class MMChessServer {
         while (true) {
             System.out.printf("%s\n", "Waiting for clients....");
             Socket socket = listener.accept();
-            Thread thread = new ServerThread(socket);
+            Thread thread = new Thread(new ServerThread(socket));
             thread.start();
         }
     }
