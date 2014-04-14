@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0acd8e35-42d2-461c-8d7d-d9ed6e2e20f8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mmchess/server/testClient/ConnectionThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mmchess/server/MMChessServer.java" afterPath="$PROJECT_DIR$/src/mmchess/server/MMChessServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mmchess/server/ServerThread.java" afterPath="$PROJECT_DIR$/src/mmchess/server/ServerThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mmchess/server/testClient/InputHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java" afterPath="$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MMChess.iws" />
@@ -97,8 +94,20 @@
       <file leaf-file-name="Connection.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9424704" vertical-offset="327" max-vertical-offset="1224">
-              <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.11971831" vertical-offset="17" max-vertical-offset="1088">
+              <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InputHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mmchess/server/testClient/InputHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+              <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -166,8 +175,9 @@
         <option value="$PROJECT_DIR$/src/mmchess/server/testClient/test.java" />
         <option value="$PROJECT_DIR$/src/mmchess/server/ServerThread.java" />
         <option value="$PROJECT_DIR$/src/mmchess/server/MMChessServer.java" />
-        <option value="$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java" />
         <option value="$PROJECT_DIR$/src/mmchess/server/testClient/ConnectionThread.java" />
+        <option value="$PROJECT_DIR$/src/mmchess/server/testClient/InputHandler.java" />
+        <option value="$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java" />
       </list>
     </option>
   </component>
@@ -548,7 +558,11 @@
       <created>1397434393303</created>
       <updated>1397434393303</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Created simple server that creates threads that continuously listen to clients until a particular exit message is sent">
+      <created>1397448128360</created>
+      <updated>1397448128360</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -723,10 +737,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/mmchess/server/testClient/InputHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/mmchess/server/testClient/Connection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9424704" vertical-offset="327" max-vertical-offset="1224">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.11971831" vertical-offset="17" max-vertical-offset="1088">
+          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
