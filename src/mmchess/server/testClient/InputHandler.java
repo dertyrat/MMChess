@@ -9,6 +9,7 @@ import java.util.Observer;
 public class InputHandler implements Observer {
     @Override
     public void update(Observable o, Object arg) {
+        // test commit
         // figure out input type and handle accordingly
     }
 }
