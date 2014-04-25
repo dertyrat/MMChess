@@ -22,11 +22,15 @@ package mmchess.client.model;
  */
 public class Board {
     
-    Board() {
+    public Board() {
         // Setting up default piece placement
         boardGrid = new Piece[8][8];
         resetBoard();
         
+    }
+    
+    public Move[] getValidMoves(int startPosX, int startPosY) {
+        return boardGrid[startPosX][startPosY].getMoves();
     }
     
     

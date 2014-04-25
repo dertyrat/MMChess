@@ -42,7 +42,11 @@ public class Rook extends Piece {
                 movesList.add(new Move(super.getXpos(), super.getYpos(), super.getYpos(), endPosY));
             }
         }
-        return (Move[]) movesList.toArray();
+        Move[] moves = new Move[movesList.size()];
+        for (int i = 0; i < movesList.size(); i++) {
+            moves[i] = movesList.get(i);
+        }
+        return moves;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

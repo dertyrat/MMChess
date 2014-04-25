@@ -19,19 +19,18 @@ limitations under the License.
 */
 
 .cellWhite {
-    -fx-background-color: #524929;
+    -fx-background-color: #ffcd9e;
 }
 .cellBlack {
-    -fx-background-color: #e2dece;
-}
-.pieceWhite {
-    -fx-text-fill: black;
-}
-.pieceBlack {
-    -fx-text-fill: black;
+    -fx-background-color: #cf8846;
 }
 .selectedCell {
     -fx-border-style: solid;
     -fx-border-width: 2px;
-    -fx-border-color: #78f0ed
+    -fx-border-color: #2c757f;
+}
+.validMove {
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: #821620;
 }
