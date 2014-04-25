@@ -20,13 +20,29 @@ package mmchess.client.model;
  *
  * @author Matthew
  */
-class Move {
+public class Move {
 
     public Move(int startPosX, int startPosY, int endPosX, int endPosY) {
         this.startPosX = startPosX;
         this.startPosY = startPosY;
         this.endPosX = endPosX;
         this.endPosY = endPosY;
+    }
+    
+    public int getStartPosX() {
+        return startPosX;
+    }
+
+    public int getStartPosY() {
+        return startPosY;
+    }
+
+    public int getEndPosX() {
+        return endPosX;
+    }
+
+    public int getEndPosY() {
+        return endPosY;
     }
     
     private final int startPosX;
@@ -40,4 +56,5 @@ class Move {
     private boolean check;
     private boolean checkMate;
     */
+
 }

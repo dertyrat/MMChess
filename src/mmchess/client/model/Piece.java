@@ -20,7 +20,7 @@ package mmchess.client.model;
  *
  * @author Matthew
  */
-abstract class Piece {
+public abstract class Piece {
     
     public static final int BLACK = 0;
     public static final int WHITE = 1;

@@ -7,21 +7,19 @@
 package mmchess.client.controller;
 
 import java.net.URL;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+
+import mmchess.client.model.Move;
 
 /**
  *
@@ -34,7 +32,7 @@ public class Controller implements Initializable {
     @FXML
     private VBox movesList;
     
-    private final ImageView[][] boardCells = new ImageView[8][8];
+    private ImageView[][] boardCells = new ImageView[8][8];
     private ImageView selectedCell = null;
     private ObservableList<Node> movesListObservable;
 
@@ -66,7 +64,7 @@ public class Controller implements Initializable {
     
     @FXML
     public void test() {
-        movesListObservable.add(new Text("test"));
+        //movesListObservable.add(new Text("test"));
     }
     
     @FXML
@@ -74,20 +72,35 @@ public class Controller implements Initializable {
         if (selectedCell == null) { 
             // If no other cell clicked
             selectedCell = (ImageView)e.getSource();
-            // TODO: Mark cell as having been selected visually
+            if (selectedCell.getImage() != null) {
+                ((StackPane)selectedCell.getParent()).getStyleClass().add("selectedCell");
+            } else {
+                selectedCell = null;
+            }
         } else if (selectedCell == (ImageView)e.getSource()) {
             // If the clicked cell is already selected
             // Deselect the cell
+            ((StackPane)selectedCell.getParent()).getStyleClass().removeAll("selectedCell");
             selectedCell = null;
-            // TODO: remove the visual indicator that the cell has been selected
         } else {
             // If the clicked cell is different from the selected cell
             // TODO: insert code to make a move here
             int[] moveTo = (int[]) ((ImageView)e.getSource()).getUserData();
             int[] moveFrom = (int[]) selectedCell.getUserData();
             // Deselect the cell
+            ((StackPane)selectedCell.getParent()).getStyleClass().removeAll("selectedCell");
             selectedCell = null;
-            // TODO: remove the visual indicator that the cell has been selected
+            
+            // TODO: Insert the move creation code here.
+            // NOTE: Currently does the actual move for testing purposes, in final
+            //       version, this will call a method of the model instead
+            doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1]));
         }
+    }
+    
+    public void doMove(Move move) {
+        boardCells[move.getEndPosX()][move.getEndPosY()].setImage(
+                boardCells[move.getStartPosX()][move.getStartPosY()].getImage());
+        boardCells[move.getStartPosX()][move.getStartPosY()].setImage(null);
     }
 }

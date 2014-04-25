@@ -20,7 +20,7 @@ package mmchess.client.model;
  *
  * @author Matthew
  */
-class Bishop extends Piece {
+public class Bishop extends Piece {
 
     public Bishop(int xpos, int ypos, int color) {
         super(xpos, ypos, color);

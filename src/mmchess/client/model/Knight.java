@@ -20,7 +20,7 @@ package mmchess.client.model;
  *
  * @author Matthew
  */
-class Knight extends Piece {
+public class Knight extends Piece {
 
     public Knight(int xpos, int ypos, int color) {
         super(xpos, ypos, color);

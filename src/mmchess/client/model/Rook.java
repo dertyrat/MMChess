@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author Matthew
  */
-class Rook extends Piece {
+public class Rook extends Piece {
 
     public Rook(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
