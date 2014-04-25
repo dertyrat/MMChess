@@ -1,4 +1,4 @@
-package mmchess.server;
+package mmchess.server.server;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -6,18 +6,19 @@ import java.util.Scanner;
 
 /**
  * @author Travis Meares
+ * Creates a thread that watches every
  */
-public class ServerThread implements Runnable {
+public class ServerThreadOld implements Runnable {
     private Socket socket;
     private Scanner fromClient;          // gets input from the socket
     private PrintWriter toClient;        // writes to the socket
     private static int numberOfClients = 0;
     private final int clientNum;
-    ConnectionQueue connectionQueue;
+    AvailablePlayersList availablePlayersList;
     private String clientName;
 
 
-    public ServerThread(Socket socket) {
+    public ServerThreadOld(Socket socket) {
         this.socket = socket;
         clientNum = ++numberOfClients;
     }
@@ -43,7 +44,7 @@ public class ServerThread implements Runnable {
                 msg = fromClient.nextLine();
                 // check for secret codes, else treat as a message
                 if (msg.equals("GET")) {
-                    System.out.printf("%s", connectionQueue.getClientList().toString());
+                    System.out.printf("%s", availablePlayersList.getClientList().toString());
                 } else {
                     System.out.printf("%s sent: %s\n", clientName, msg);
                 }
@@ -66,7 +67,7 @@ public class ServerThread implements Runnable {
             return false;
         }
         // add client name to connection queue
-        connectionQueue = new ConnectionQueue(clientName);
+        availablePlayersList = new AvailablePlayersList(clientName);
         toClient.println("SUCCESS");
         toClient.flush();
         return true;

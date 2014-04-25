@@ -1,4 +1,4 @@
-package mmchess.server;
+package mmchess.server.server;
 
 import java.io.*;
 import java.net.ServerSocket;

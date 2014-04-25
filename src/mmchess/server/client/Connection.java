@@ -1,4 +1,4 @@
-package mmchess.server.testClient;
+package mmchess.server.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -43,7 +43,7 @@ public class Connection {
      */
     public boolean sendMove(ChessMove move) {
         try {
-            outputStream.writeObject(move);
+            outputStream.writeObject("MOVE " + move.toString());
         } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;

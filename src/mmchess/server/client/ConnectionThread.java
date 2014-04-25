@@ -1,10 +1,12 @@
-package mmchess.server.testClient;
+package mmchess.server.client;
 
 import java.io.ObjectInputStream;
 import java.util.Observable;
 
 /**
- * Created by Trav on 4/13/2014.
+ * @author Travis Meares
+ * Creates runnable target for a Thread to continuously watch the socket's input
+ * stream and alerts an input handler any time there is input from the server
  */
 public class ConnectionThread extends Observable implements Runnable {
     private ObjectInputStream inputStream;
@@ -12,8 +14,13 @@ public class ConnectionThread extends Observable implements Runnable {
 
     public ConnectionThread(ObjectInputStream inputStream) {
         this.inputStream = inputStream;
+        addObserver(new InputHandler());
     }
 
+    /**
+     * Called by the Thread class upon start. Reads from input stream until end
+     * is called
+     */
     @Override
     public void run() {
         try {
@@ -27,6 +34,9 @@ public class ConnectionThread extends Observable implements Runnable {
         }
     }
 
+    /**
+     * Stops the wrapper thread from watching the input stream
+     */
     public void end() {
         isRunning = false;
     }

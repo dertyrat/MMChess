@@ -1,4 +1,4 @@
-package mmchess.server.testClient;
+package mmchess.server.client;
 
 import java.io.PrintWriter;
 import java.net.Socket;
