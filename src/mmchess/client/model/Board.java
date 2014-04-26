@@ -30,10 +30,12 @@ public class Board {
     }
     
     public Move[] getValidMoves(int startPosX, int startPosY) {
-        return boardGrid[startPosX][startPosY].getMoves();
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
-    
+    public Piece getPiece(int xPos, int yPos) {
+        return boardGrid[xPos][yPos];
+    }
 
     private void resetBoard() {
         boardGrid[0][0] = new Rook (0, 0, Piece.BLACK);

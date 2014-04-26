@@ -16,6 +16,8 @@
 
 package mmchess.client.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Matthew
@@ -27,8 +29,92 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Move[] getMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Move[] getMoves(Board board) {
+        // The valid moves will be accumulated in this list
+        ArrayList<Move> movesList = new ArrayList<>();
+        Piece other;
+        
+        // Checking for moves in "up-left" direction
+        for (int i = 1; i < 8; i++) {
+            // Checks for out-of-bounds
+            if ((super.getXpos() - i) < 0 || (super.getYpos() - i) < 0) {
+                break;
+            }
+            
+            other = board.getPiece(super.getXpos() - i, super.getYpos() - i);
+            
+            if (other == null) {
+                addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
+            } else if (other.getColor() != super.getColor()) {
+                addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
+                break;
+            } else {
+                break;
+            }
+        }
+        
+        // Checking for moves in "up-right" direction
+        for (int i = 1; i < 8; i++) {
+            // Checks for out-of-bounds
+            if ((super.getXpos() + i) > 7 || (super.getYpos() - i) < 0) {
+                break;
+            }
+            
+            other = board.getPiece(super.getXpos() + i, super.getYpos() - i);
+            
+            if (other == null) {
+                addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
+            } else if (other.getColor() != super.getColor()) {
+                addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
+                break;
+            } else {
+                break;
+            }
+        }
+        
+        // Checking for moves in "down-right" direction
+        for (int i = 1; i < 8; i++) {
+            // Checks for out-of-bounds
+            if ((super.getXpos() + i) > 7 || (super.getYpos() + i) > 7) {
+                break;
+            }
+            
+            other = board.getPiece(super.getXpos() + i, super.getYpos() + i);
+            
+            if (other == null) {
+                addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
+            } else if (other.getColor() != super.getColor()) {
+                addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
+                break;
+            } else {
+                break;
+            }
+        }
+        
+        // Checking for moves in "down-left" direction
+        for (int i = 1; i < 8; i++) {
+            // Checks for out-of-bounds
+            if ((super.getXpos() - i) < 0 || (super.getYpos() + i) > 7) {
+                break;
+            }
+            
+            other = board.getPiece(super.getXpos() - i, super.getYpos() + i);
+            
+            if (other == null) {
+                addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
+            } else if (other.getColor() != super.getColor()) {
+                addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
+                break;
+            } else {
+                break;
+            }
+        }
+        
+        // Cannot cast movesList.toArray(), so the following is necessary
+        Move[] moves = new Move[movesList.size()];
+        for (int i = 0; i < movesList.size(); i++) {
+            moves[i] = movesList.get(i);
+        }
+        return moves;
     }
-    
 }

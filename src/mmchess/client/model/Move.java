@@ -27,6 +27,11 @@ public class Move {
         this.startPosY = startPosY;
         this.endPosX = endPosX;
         this.endPosY = endPosY;
+        capture = false;
+        longCastle = false;
+        shortCastle = false;
+        check = false;
+        checkMate = false;
     }
     
     public int getStartPosX() {
@@ -45,16 +50,55 @@ public class Move {
         return endPosY;
     }
     
+    public boolean isCapture() {
+        return capture;
+    }
+
+    public void setCapture(boolean capture) {
+        this.capture = capture;
+    }
+
+    public boolean isLongCastle() {
+        return longCastle;
+    }
+
+    public void setLongCastle(boolean longCastle) {
+        this.longCastle = longCastle;
+    }
+
+    public boolean isShortCastle() {
+        return shortCastle;
+    }
+
+    public void setShortCastle(boolean shortCastle) {
+        this.shortCastle = shortCastle;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public boolean isCheckMate() {
+        return checkMate;
+    }
+
+    public void setCheckMate(boolean checkMate) {
+        this.checkMate = checkMate;
+    }
+    
     private final int startPosX;
     private final int startPosY;
     private final int endPosX;
     private final int endPosY;
-    /*
     private boolean capture;
     private boolean longCastle;
     private boolean shortCastle;
     private boolean check;
     private boolean checkMate;
-    */
+    
 
 }

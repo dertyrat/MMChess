@@ -16,6 +16,8 @@
 
 package mmchess.client.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Matthew
@@ -27,8 +29,30 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Move[] getMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Move[] getMoves(Board board) {
+        // The valid moves will be accumulated in this list
+        ArrayList<Move> movesList = new ArrayList<>();
+        Piece other;
+        
+        for (int x = -2; x <= 2; x++) {
+            for (int y = -2; y <= 2; y++) {
+                if (x != y && x != -y && x != 0 && y != 0
+                        && super.getXpos() + x < 8 && super.getXpos() >= 0
+                        && super.getYpos() + y < 8 && super.getYpos() >= 0) {
+                    other = board.getPiece(super.getXpos()+x, super.getYpos()+y);
+                    if (other == null || other.getColor() != super.getColor()) {
+                        super.addMoveToList(movesList, super.getXpos()+x, super.getYpos()+y);
+                    }
+                }
+            }
+        }
+        
+        // Cannot cast movesList.toArray(), so the following is necessary
+        Move[] moves = new Move[movesList.size()];
+        for (int i = 0; i < movesList.size(); i++) {
+            moves[i] = movesList.get(i);
+        }
+        return moves;
     }
 
 }

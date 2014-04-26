@@ -26,29 +26,99 @@ public class Rook extends Piece {
 
     public Rook(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
+        canCastle = true;
+    }
+    
+    public boolean canCastle() {
+        return canCastle;
+    }
+    
+    @Override
+    public void setYpos(int ypos) { 
+        super.ypos = ypos;
+        this.canCastle = false;
+    }
+    
+    @Override
+    public void setXpos(int xpos) {
+        this.xpos = xpos;
+        this.canCastle = false;
     }
 
     @Override
-    public Move[] getMoves() {
+    public Move[] getMoves(Board board) {
+        // The valid moves will be accumulated in this list
         ArrayList<Move> movesList = new ArrayList<>();
-        // Generates vertical moves
-        for (int i = -7; i < 8; i++) {
-            int endPosX = super.getXpos() + i;
-            int endPosY = super.getYpos() + i;
-            if (endPosX >= 0 && endPosX < 8 && endPosX != super.getXpos()) {
-                movesList.add(new Move(super.getXpos(), super.getYpos(), endPosX, super.getYpos()));
-            }
-            if (endPosY >= 0 && endPosY < 8 && endPosY != super.getYpos()) {
-                movesList.add(new Move(super.getXpos(), super.getYpos(), super.getYpos(), endPosY));
+        Piece other = null;
+        
+        // Checking for moves going "up"
+        for (int y = super.getYpos()-1; y >= 0; y--) {
+            other = board.getPiece(super.getXpos(), y);
+            if (other == null) { // Valid Move
+                addMoveToList(movesList, super.getXpos(), y);
+            } else {
+                if (other.getColor() != super.getColor()) { // Valid Move
+                    addMoveToList(movesList, super.getXpos(), y);
+                    break; // cannot move further in this direction
+                } else { // Invalid Move and cannot move past
+                    break;
+                }
             }
         }
+        
+        // Checking for moves going "down"
+        for (int y = super.getYpos()+1; y <= 7; y++) {
+            other = board.getPiece(super.getXpos(), y);
+            if (other == null) { // Valid Move
+                addMoveToList(movesList, super.getXpos(), y);
+            } else {
+                if (other.getColor() != super.getColor()) { // Valid Move
+                    addMoveToList(movesList, super.getXpos(), y);
+                    break; // cannot move further in this direction
+                } else { // Invalid Move and cannot move past
+                    break;
+                }
+            }
+        }
+        
+        // Checking for moves going "left"
+        for (int x = super.getXpos()-1; x >= 0; x--) {
+            other = board.getPiece(x, super.getYpos());
+            if (other == null) { // Valid Move
+                addMoveToList(movesList, x, super.getYpos());
+            } else {
+                if (other.getColor() != super.getColor()) { // Valid Move
+                    addMoveToList(movesList, x, super.getYpos());
+                    break; // cannot move further in this direction
+                } else { // Invalid Move and cannot move past
+                    break;
+                }
+            }
+        }
+        
+        // Checking for moves going "right"
+        for (int x = super.getXpos()+1; x >= 0; x++) {
+            other = board.getPiece(x, super.getYpos());
+            if (other == null) { // Valid Move
+                addMoveToList(movesList, x, super.getYpos());
+            } else {
+                if (other.getColor() != super.getColor()) { // Valid Move
+                    addMoveToList(movesList, x, super.getYpos());
+                    break; // cannot move further in this direction
+                } else { // Invalid Move and cannot move past
+                    break;
+                }
+            }
+        }
+        
+        // Cannot cast movesList.toArray(), so the following is necessary
         Move[] moves = new Move[movesList.size()];
         for (int i = 0; i < movesList.size(); i++) {
             moves[i] = movesList.get(i);
         }
         return moves;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
-    
+    private boolean canCastle;
 }

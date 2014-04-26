@@ -16,6 +16,8 @@
 
 package mmchess.client.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Matthew
@@ -32,17 +34,24 @@ public abstract class Piece {
         this.ypos = ypos;
     }
     
-    public abstract Move[] getMoves();
+    public abstract Move[] getMoves(Board board);
     
+    protected void addFlagsToMove(Move move){
+        // TODO: add flag checking
+    }
+    
+    protected void addMoveToList(ArrayList<Move> movesList, int x, int y) {
+        movesList.add(new Move(this.getXpos(), this.getYpos(), x, y));
+        this.addFlagsToMove(movesList.get(movesList.size()-1));
+    }
     public int getXpos() { return xpos; }
     public int getYpos() { return ypos; }
     public int getColor() { return color; }
     public void setYpos(int ypos) { this.ypos = ypos; }
     public void setXpos(int xpos) { this.xpos = xpos; }
     
-    private int xpos;
-    private int ypos;
+    protected int xpos;
+    protected int ypos;
+    
     private final int color;
-    
-    
 }
