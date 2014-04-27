@@ -1,4 +1,6 @@
-package mmchess.server.server;
+package mmchess.server.old;
+
+import mmchess.server.old.AvailablePlayersList;
 
 import java.io.PrintWriter;
 import java.net.Socket;

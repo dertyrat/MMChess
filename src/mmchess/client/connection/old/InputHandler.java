@@ -1,4 +1,4 @@
-package mmchess.server.client;
+package mmchess.client.connection.old;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -13,14 +13,15 @@ public class InputHandler implements Observer {
         // figure out input type and handle accordingly
         String[] input = arg.toString().split("[ ]+");
         String inputType = input[0];
-        String inputMessage = input[1];
 
         if (inputType.equals("MOVE")) {
-            // send inputMessage to model
+            // send move to controller
+            System.out.printf("MOVE = %s\n", input[1]);
         } else if (inputType.equals("CONN")) {
             // handle connection error
+            System.out.printf("%s", "Connection error!");
         } else {
-            // invalid data sent, respond to server
+            // invalid data sent
         }
     }
 }

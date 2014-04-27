@@ -1,4 +1,4 @@
-package mmchess.server.client;
+package mmchess.client.connection.old;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -20,7 +20,7 @@ public class MMChessClient {
             PrintWriter toServer = new PrintWriter(socket.getOutputStream());
 
             String serverCommand = fromServer.nextLine();
-            System.out.printf("Server sent: %s\n", serverCommand);
+            System.out.printf("RunServer sent: %s\n", serverCommand);
             String name;
             while (serverCommand.equals("LOG")) {
                 System.out.printf("Enter your name: ");
@@ -30,7 +30,7 @@ public class MMChessClient {
                 serverCommand = fromServer.nextLine();
             }
 
-            System.out.printf("Server sent: %s\n", serverCommand);
+            System.out.printf("RunServer sent: %s\n", serverCommand);
 
             String msg;
             do {

@@ -1,4 +1,6 @@
-package mmchess.server.client;
+package mmchess.client.connection;
+
+import mmchess.client.connection.old.ConnectionThread;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,20 +13,23 @@ import java.net.Socket;
  * a thread to handle incoming input
  */
 public class Connection {
+    final int PORT;      //must match server port number
     Socket socket;
     ConnectionThread connectionThread;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
 
     public Connection() {
-        final int PORT = 8888;      //must match server port number
+        PORT = 8888;
+    }
 
+    public void open() {
         try {
             Socket socket = new Socket("localhost", PORT);
             System.out.printf("Connected to %s\n", socket.getInetAddress().getHostName());
 
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
 
             connectionThread = new ConnectionThread(inputStream);
             Thread thread = new Thread(connectionThread);
@@ -41,9 +46,9 @@ public class Connection {
      * @param move the client validated ChessMove object
      * @return true if move was successful, false if IOException
      */
-    public boolean sendMove(ChessMove move) {
+    public boolean sendMove(String move) {
         try {
-            outputStream.writeObject("MOVE " + move.toString());
+            outputStream.writeObject("MOVE " + move);
         } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
@@ -62,8 +67,4 @@ public class Connection {
             ioe.printStackTrace();
         }
     }
-
-
 }
-
-class ChessMove {}
