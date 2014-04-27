@@ -32,6 +32,22 @@ public class Move {
         shortCastle = false;
         check = false;
         checkMate = false;
+        
+        rowNames = new char[]{'8','7','6','5','4','3','2','1'};
+        colNames = new char[]{'a','b','c','d','e','f','g','h'};
+    }
+    
+    public Move(Class pieceType, int startPosX, int startPosY, int endPosX, int endPosY) {
+        this(startPosX, startPosY, endPosX, endPosY);
+        this.pieceType = pieceType;
+        /*
+        if (Bishop.class == pieceType) this.pieceType = 'B';
+        else if (King.class == pieceType) this.pieceType = 'K';
+        else if (Knight.class == pieceType) this.pieceType = 'N';
+        else if (Pawn.class == pieceType) this.pieceType = '\u0000';
+        else if (Queen.class == pieceType) this.pieceType = 'Q';
+        else if (Rook.class == pieceType) this.pieceType = 'R';
+        */
     }
 
     @Override
@@ -53,6 +69,35 @@ public class Move {
         hash = 97 * hash + this.endPosX;
         hash = 97 * hash + this.endPosY;
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        if (shortCastle) return "O-O";
+        else if (longCastle) return "O-O-O";
+        else {
+            StringBuilder output = new StringBuilder();
+        
+            // Adds Piece Type
+            if (Bishop.class == pieceType) output.append("B");
+            else if (King.class == pieceType) output.append("K");
+            else if (Knight.class == pieceType) output.append("N");
+            else if (Queen.class == pieceType) output.append("Q");
+            else if (Rook.class == pieceType) output.append("R");
+
+            // Adding starting cell
+            output.append(colNames[startPosX]);
+            output.append(rowNames[startPosY]);
+
+            // Adding capture flag
+            if (capture) output.append('x');
+
+            // Adding ending cell
+            output.append(colNames[endPosX]);
+            output.append(rowNames[endPosY]);
+            
+            return output.toString();
+        }
     }
     
     public int getStartPosX() {
@@ -120,4 +165,7 @@ public class Move {
     private boolean shortCastle;
     private boolean check;
     private boolean checkMate;
+    private Class pieceType;
+    private char[] rowNames;
+    private char[] colNames;
 }

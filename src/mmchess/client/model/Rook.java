@@ -59,6 +59,7 @@ public class Rook extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, super.getXpos(), y);
+                    movesList.get(movesList.size()-1).setCapture(true);
                     break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
@@ -74,7 +75,8 @@ public class Rook extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, super.getXpos(), y);
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }
@@ -89,7 +91,8 @@ public class Rook extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, x, super.getYpos());
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }
@@ -104,7 +107,8 @@ public class Rook extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, x, super.getYpos());
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }

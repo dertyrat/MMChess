@@ -32,12 +32,13 @@ public abstract class Piece {
         this.color = color;
         this.xpos = xpos;
         this.ypos = ypos;
+        System.out.println(this.getClass().toString());
     }
     
     public abstract Move[] getMoves(Board board);
     
     protected void addMoveToList(ArrayList<Move> movesList, int x, int y) {
-        movesList.add(new Move(this.getXpos(), this.getYpos(), x, y));
+        movesList.add(new Move(this.getClass(), this.getXpos(), this.getYpos(), x, y));
     }
     public int getXpos() { return xpos; }
     public int getYpos() { return ypos; }

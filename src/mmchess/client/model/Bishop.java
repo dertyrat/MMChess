@@ -47,6 +47,7 @@ public class Bishop extends Piece {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -66,6 +67,7 @@ public class Bishop extends Piece {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -85,6 +87,7 @@ public class Bishop extends Piece {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -104,6 +107,7 @@ public class Bishop extends Piece {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;

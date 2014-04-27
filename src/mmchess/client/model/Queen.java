@@ -47,6 +47,7 @@ public class Queen extends Piece {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() - i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -66,6 +67,7 @@ public class Queen extends Piece {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() - i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -85,6 +87,7 @@ public class Queen extends Piece {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() + i, super.getYpos() + i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -104,6 +107,7 @@ public class Queen extends Piece {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
             } else if (other.getColor() != super.getColor()) {
                 addMoveToList(movesList, super.getXpos() - i, super.getYpos() + i);
+                movesList.get(movesList.size()-1).setCapture(true);
                 break;
             } else {
                 break;
@@ -118,6 +122,7 @@ public class Queen extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, super.getXpos(), y);
+                    movesList.get(movesList.size()-1).setCapture(true);
                     break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
@@ -133,7 +138,8 @@ public class Queen extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, super.getXpos(), y);
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }
@@ -148,7 +154,8 @@ public class Queen extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, x, super.getYpos());
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }
@@ -163,7 +170,8 @@ public class Queen extends Piece {
             } else {
                 if (other.getColor() != super.getColor()) { // Valid Move
                     addMoveToList(movesList, x, super.getYpos());
-                    break; // cannot move further in this direction
+                    movesList.get(movesList.size()-1).setCapture(true);
+                break; // cannot move further in this direction
                 } else { // Invalid Move and cannot move past
                     break;
                 }

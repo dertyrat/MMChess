@@ -19,9 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import mmchess.client.model.Move;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import mmchess.client.model.Model;
+import mmchess.client.model.Move;
 
 /**
  *
@@ -78,19 +80,40 @@ public class Controller implements Initializable {
             }
         }
         
-        boardCells[0][7].setImage(Controller.whiteRook);// = new Rook (0, 7, Piece.WHITE);
-        boardCells[1][7].setImage(Controller.whiteKnight);// = new Knight (1, 7, Piece.WHITE);
-        boardCells[2][7].setImage(Controller.whiteBishop);// = new Bishop (2, 7, Piece.WHITE);
-        boardCells[3][7].setImage(Controller.whiteQueen);// = new Queen (3, 7, Piece.WHITE);
-        boardCells[4][7].setImage(Controller.whiteKing);// = new King (4, 7, Piece.WHITE);
-        boardCells[5][7].setImage(Controller.whiteBishop);// = new Bishop (5, 7, Piece.WHITE);
-        boardCells[6][7].setImage(Controller.whiteKnight);// = new Knight (6, 7, Piece.WHITE);
-        boardCells[7][7].setImage(Controller.whiteRook);// = new Rook (7, 7, Piece.WHITE);
+        boardCells[0][7].setImage(Controller.whiteRook);
+        boardCells[1][7].setImage(Controller.whiteKnight);
+        boardCells[2][7].setImage(Controller.whiteBishop);
+        boardCells[3][7].setImage(Controller.whiteQueen);
+        boardCells[4][7].setImage(Controller.whiteKing);
+        boardCells[5][7].setImage(Controller.whiteBishop);
+        boardCells[6][7].setImage(Controller.whiteKnight);
+        boardCells[7][7].setImage(Controller.whiteRook);
+        
+        while (movesListObservable.size() != 0) {
+            movesListObservable.remove(0);
+        }
     }
     
     @FXML
     public void test() {
-        //movesListObservable.add(new Text("test"));
+        
+        
+        // Code to rotate the board so black player is on bottom
+        if (boardGrid.getRotate() == 0) {
+            boardGrid.setRotate(180);
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    boardCells[i][j].setRotate(-180);
+                }
+            }
+        } else {
+            boardGrid.setRotate(0);
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    boardCells[i][j].setRotate(0);
+                }
+            }
+        }
     }
     
     @FXML
@@ -147,12 +170,7 @@ public class Controller implements Initializable {
             
             if (model.doMove(newMove) ) {
                 this.doMove(newMove);
-                System.out.println("Move: " + newMove.getStartPosX() + "," + newMove.getStartPosY() + " -> " + newMove.getEndPosX() + "," + newMove.getEndPosY());
-                System.out.println("      Capture:" + newMove.isCapture());
-                System.out.println("      LCastle:" + newMove.isLongCastle());
-                System.out.println("      SCastle:" + newMove.isShortCastle());
-                System.out.println("        Check:" + newMove.isCheck());
-                System.out.println("      ChkMate:" + newMove.isCheckMate());
+                
             }
         }
     }
@@ -185,6 +203,11 @@ public class Controller implements Initializable {
         boardCells[move.getEndPosX()][move.getEndPosY()].setImage(
                 boardCells[move.getStartPosX()][move.getStartPosY()].getImage());
         boardCells[move.getStartPosX()][move.getStartPosY()].setImage(null);
+        
+        Text temp = new Text(movesListObservable.size() + ". " + move.toString());
+        temp.setFont(new Font("System", 14));
+        movesListObservable.add(temp);
+
     }
     
     @FXML
