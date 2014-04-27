@@ -14,6 +14,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -43,9 +44,7 @@ public class Controller implements Initializable {
                 x = 0;
             }
         }
-        
         movesListObservable = movesList.getChildren();
-        
         model = new Model();
     }
     
@@ -58,6 +57,35 @@ public class Controller implements Initializable {
     @FXML
     public void newGame() {
         model.newGame();
+        
+        boardCells[0][0].setImage(Controller.blackRook);
+        boardCells[1][0].setImage(Controller.blackKnight);
+        boardCells[2][0].setImage(Controller.blackBishop);
+        boardCells[3][0].setImage(Controller.blackQueen);
+        boardCells[4][0].setImage(Controller.blackKing);
+        boardCells[5][0].setImage(Controller.blackBishop);
+        boardCells[6][0].setImage(Controller.blackKnight);
+        boardCells[7][0].setImage(Controller.blackRook);
+        
+        for (int i = 0; i < 8; i++) {
+            boardCells[i][1].setImage(Controller.blackPawn);
+            boardCells[i][6].setImage(Controller.whitePawn);
+        }
+        
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
+                boardCells[j][i].setImage(null);
+            }
+        }
+        
+        boardCells[0][7].setImage(Controller.whiteRook);// = new Rook (0, 7, Piece.WHITE);
+        boardCells[1][7].setImage(Controller.whiteKnight);// = new Knight (1, 7, Piece.WHITE);
+        boardCells[2][7].setImage(Controller.whiteBishop);// = new Bishop (2, 7, Piece.WHITE);
+        boardCells[3][7].setImage(Controller.whiteQueen);// = new Queen (3, 7, Piece.WHITE);
+        boardCells[4][7].setImage(Controller.whiteKing);// = new King (4, 7, Piece.WHITE);
+        boardCells[5][7].setImage(Controller.whiteBishop);// = new Bishop (5, 7, Piece.WHITE);
+        boardCells[6][7].setImage(Controller.whiteKnight);// = new Knight (6, 7, Piece.WHITE);
+        boardCells[7][7].setImage(Controller.whiteRook);// = new Rook (7, 7, Piece.WHITE);
     }
     
     @FXML
@@ -169,4 +197,17 @@ public class Controller implements Initializable {
     private ObservableList<Node> movesListObservable;
     private Model model;
     private Move[] validMoves;
+    
+    private static final Image whitePawn = new Image("/mmchess/client/gui/images/wP.png", 46, 46, true, true);
+    private static final Image whiteRook = new Image("/mmchess/client/gui/images/wR.png", 46, 46, true, true);
+    private static final Image whiteBishop = new Image("/mmchess/client/gui/images/wB.png", 46, 46, true, true);
+    private static final Image whiteKnight = new Image("/mmchess/client/gui/images/wH.png", 46, 46, true, true);
+    private static final Image whiteKing = new Image("/mmchess/client/gui/images/wK.png", 46, 46, true, true);
+    private static final Image whiteQueen = new Image("/mmchess/client/gui/images/wQ.png", 46, 46, true, true);
+    private static final Image blackPawn = new Image("/mmchess/client/gui/images/bP.png", 46, 46, true, true);
+    private static final Image blackRook = new Image("/mmchess/client/gui/images/bR.png", 46, 46, true, true);
+    private static final Image blackBishop = new Image("/mmchess/client/gui/images/bB.png", 46, 46, true, true);
+    private static final Image blackKnight = new Image("/mmchess/client/gui/images/bH.png", 46, 46, true, true);
+    private static final Image blackKing = new Image("/mmchess/client/gui/images/bK.png", 46, 46, true, true);
+    private static final Image blackQueen = new Image("/mmchess/client/gui/images/bQ.png", 46, 46, true, true);
 }
