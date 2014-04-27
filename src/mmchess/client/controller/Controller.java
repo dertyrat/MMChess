@@ -20,21 +20,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import mmchess.client.model.Move;
+import mmchess.client.model.Model;
 
 /**
  *
  * @author Matthew
  */
 public class Controller implements Initializable {
-    
-    @FXML
-    private GridPane boardGrid;
-    @FXML
-    private VBox movesList;
-    
-    private ImageView[][] boardCells = new ImageView[8][8];
-    private ImageView selectedCell = null;
-    private ObservableList<Node> movesListObservable;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,12 +45,19 @@ public class Controller implements Initializable {
         }
         
         movesListObservable = movesList.getChildren();
+        
+        model = new Model();
     }
     
     @FXML
     public void exitApplication()
     {
         Platform.exit();
+    }
+    
+    @FXML
+    public void newGame() {
+        model.newGame();
     }
     
     @FXML
@@ -81,11 +80,11 @@ public class Controller implements Initializable {
                 // DEBUG: remove from final version
                 System.out.println("Cell: " + moveFrom[0] + "," + moveFrom[1]);
                 // END DEBUG
-//                validMoves = gameBoard.getValidMoves(moveFrom[0], moveFrom[1]);
-//                for (Move move : validMoves) {
-//                    ((StackPane)boardCells[move.getEndPosX()][move.getEndPosY()].getParent())
-//                            .getStyleClass().add("validMove");
-//                }
+                validMoves = model.getValidMoves(moveFrom[0], moveFrom[1]);
+                for (Move move : validMoves) {
+                    ((StackPane)boardCells[move.getEndPosX()][move.getEndPosY()].getParent())
+                            .getStyleClass().add("validMove");
+                }
             } else {
                 selectedCell = null;
             }
@@ -93,10 +92,10 @@ public class Controller implements Initializable {
             // If the clicked cell is already selected
             // Deselect the cell
             ((StackPane)selectedCell.getParent()).getStyleClass().removeAll("selectedCell");
-//            for (Move move : validMoves) {
-//                ((StackPane)boardCells[move.getEndPosX()][move.getEndPosY()].getParent())
-//                        .getStyleClass().removeAll("validMove");
-//            }
+            for (Move move : validMoves) {
+                ((StackPane)boardCells[move.getEndPosX()][move.getEndPosY()].getParent())
+                        .getStyleClass().removeAll("validMove");
+            }
 
             selectedCell = null;
         } else {
@@ -107,11 +106,17 @@ public class Controller implements Initializable {
             // Deselect the cell
             ((StackPane)selectedCell.getParent()).getStyleClass().removeAll("selectedCell");
             selectedCell = null;
+            for (Move move : validMoves) {
+                ((StackPane)boardCells[move.getEndPosX()][move.getEndPosY()].getParent())
+                        .getStyleClass().removeAll("validMove");
+            }
             
             // TODO: Insert the move creation code here.
             // NOTE: Currently does the actual move for testing purposes, in final
             //       version, this will call a method of the model instead
-            doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1]));
+            if (model.doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) ) {
+                this.doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1]));
+            }
         }
     }
     
@@ -120,4 +125,16 @@ public class Controller implements Initializable {
                 boardCells[move.getStartPosX()][move.getStartPosY()].getImage());
         boardCells[move.getStartPosX()][move.getStartPosY()].setImage(null);
     }
+    
+    
+    @FXML
+    private GridPane boardGrid;
+    @FXML
+    private VBox movesList;
+    
+    private ImageView[][] boardCells = new ImageView[8][8];
+    private ImageView selectedCell = null;
+    private ObservableList<Node> movesListObservable;
+    private Model model;
+    private Move[] validMoves;
 }

@@ -1,71 +1,55 @@
-/*
- * Copyright 2014 Matthew.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package mmchess.client.model;
 
-/**
- *
- * @author Matthew
- */
 public class Board {
     
     public Board() {
         // Setting up default piece placement
         boardGrid = new Piece[8][8];
         resetBoard();
-        
-    }
-    
-    public Move[] getValidMoves(int startPosX, int startPosY) {
-        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     public Piece getPiece(int xPos, int yPos) {
         return boardGrid[xPos][yPos];
     }
+    
+    public boolean doMove(Move move) {
+        boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
+        boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
+        boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
+        boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
+        
+        return true;
+    }
 
-    private void resetBoard() {
+    public void resetBoard() {
         boardGrid[0][0] = new Rook (0, 0, Piece.BLACK);
-        boardGrid[0][1] = new Knight (0, 1, Piece.BLACK);
-        boardGrid[0][2] = new Bishop (0, 2, Piece.BLACK);
-        boardGrid[0][3] = new Queen (0, 3, Piece.BLACK);
-        boardGrid[0][4] = new King (0, 4, Piece.BLACK);
-        boardGrid[0][5] = new Bishop (0, 5, Piece.BLACK);
-        boardGrid[0][6] = new Knight (0, 6, Piece.BLACK);
-        boardGrid[0][7] = new Rook (0, 7, Piece.BLACK);
+        boardGrid[1][0] = new Knight (1, 0, Piece.BLACK);
+        boardGrid[2][0] = new Bishop (2, 0, Piece.BLACK);
+        boardGrid[3][0] = new Queen (3, 0, Piece.BLACK);
+        boardGrid[4][0] = new King (4, 0, Piece.BLACK);
+        boardGrid[5][0] = new Bishop (5, 0, Piece.BLACK);
+        boardGrid[6][0] = new Knight (6, 0, Piece.BLACK);
+        boardGrid[7][0] = new Rook (7, 0, Piece.BLACK);
         
         for (int i = 0; i < 8; i++) {
-            boardGrid[1][i] = new Pawn (1, i, Piece.BLACK);
-            boardGrid[6][i] = new Pawn (6, i, Piece.WHITE);
+            boardGrid[i][1] = new Pawn (i, 1, Piece.BLACK);
+            boardGrid[i][6] = new Pawn (i, 6, Piece.WHITE);
         }
         
         for (int i = 2; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
-                boardGrid[i][j] = Piece.EMPTY;
+                boardGrid[j][i] = Piece.EMPTY;
             }
         }
         
-        boardGrid[7][0] = new Rook (0, 0, Piece.WHITE);
-        boardGrid[7][1] = new Knight (0, 1, Piece.WHITE);
-        boardGrid[7][2] = new Bishop (0, 2, Piece.WHITE);
-        boardGrid[7][3] = new Queen (0, 3, Piece.WHITE);
-        boardGrid[7][4] = new King (0, 4, Piece.WHITE);
-        boardGrid[7][5] = new Bishop (0, 5, Piece.WHITE);
-        boardGrid[7][6] = new Knight (0, 6, Piece.WHITE);
-        boardGrid[7][7] = new Rook (0, 7, Piece.WHITE);
+        boardGrid[0][7] = new Rook (0, 7, Piece.WHITE);
+        boardGrid[1][7] = new Knight (1, 7, Piece.WHITE);
+        boardGrid[2][7] = new Bishop (2, 7, Piece.WHITE);
+        boardGrid[3][7] = new Queen (3, 7, Piece.WHITE);
+        boardGrid[4][7] = new King (4, 7, Piece.WHITE);
+        boardGrid[5][7] = new Bishop (5, 7, Piece.WHITE);
+        boardGrid[6][7] = new Knight (6, 7, Piece.WHITE);
+        boardGrid[7][7] = new Rook (7, 7, Piece.WHITE);
     }
     
     private Piece[][] boardGrid;

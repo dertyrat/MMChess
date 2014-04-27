@@ -36,13 +36,8 @@ public abstract class Piece {
     
     public abstract Move[] getMoves(Board board);
     
-    protected void addFlagsToMove(Move move){
-        // TODO: add flag checking
-    }
-    
     protected void addMoveToList(ArrayList<Move> movesList, int x, int y) {
         movesList.add(new Move(this.getXpos(), this.getYpos(), x, y));
-        this.addFlagsToMove(movesList.get(movesList.size()-1));
     }
     public int getXpos() { return xpos; }
     public int getYpos() { return ypos; }
