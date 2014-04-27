@@ -67,7 +67,7 @@ public class Rook extends Piece {
         }
         
         // Checking for moves going "down"
-        for (int y = super.getYpos()+1; y <= 7; y++) {
+        for (int y = super.getYpos()+1; y < 8; y++) {
             other = board.getPiece(super.getXpos(), y);
             if (other == null) { // Valid Move
                 addMoveToList(movesList, super.getXpos(), y);
@@ -97,7 +97,7 @@ public class Rook extends Piece {
         }
         
         // Checking for moves going "right"
-        for (int x = super.getXpos()+1; x >= 0; x++) {
+        for (int x = super.getXpos()+1; x < 8; x++) {
             other = board.getPiece(x, super.getYpos());
             if (other == null) { // Valid Move
                 addMoveToList(movesList, x, super.getYpos());

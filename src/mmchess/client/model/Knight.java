@@ -37,11 +37,14 @@ public class Knight extends Piece {
         for (int x = -2; x <= 2; x++) {
             for (int y = -2; y <= 2; y++) {
                 if (x != y && x != -y && x != 0 && y != 0
-                        && super.getXpos() + x < 8 && super.getXpos() >= 0
-                        && super.getYpos() + y < 8 && super.getYpos() >= 0) {
+                        && (super.getXpos() + x) < 8 && (super.getXpos() + x) >= 0
+                        && (super.getYpos() + y) < 8 && (super.getYpos() + y) >= 0) {
                     other = board.getPiece(super.getXpos()+x, super.getYpos()+y);
-                    if (other == null || other.getColor() != super.getColor()) {
+                    if (other == null) {
                         super.addMoveToList(movesList, super.getXpos()+x, super.getYpos()+y);
+                    } else if (other.getColor() != super.getColor()) {
+                        super.addMoveToList(movesList, super.getXpos()+x, super.getYpos()+y);
+                        movesList.get(movesList.size()-1).setCapture(true);
                     }
                 }
             }

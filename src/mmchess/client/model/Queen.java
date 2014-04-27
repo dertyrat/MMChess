@@ -32,7 +32,7 @@ public class Queen extends Piece {
     public Move[] getMoves(Board board) {
         // The valid moves will be accumulated in this list
         ArrayList<Move> movesList = new ArrayList<>();
-        Piece other = null;
+        Piece other;
         
         // Checking for moves in "up-left" direction
         for (int i = 1; i < 8; i++) {
@@ -126,7 +126,7 @@ public class Queen extends Piece {
         }
         
         // Checking for moves going "down"
-        for (int y = super.getYpos()+1; y <= 7; y++) {
+        for (int y = super.getYpos()+1; y < 8; y++) {
             other = board.getPiece(super.getXpos(), y);
             if (other == null) { // Valid Move
                 addMoveToList(movesList, super.getXpos(), y);
@@ -156,7 +156,7 @@ public class Queen extends Piece {
         }
         
         // Checking for moves going "right"
-        for (int x = super.getXpos()+1; x >= 0; x++) {
+        for (int x = super.getXpos()+1; x < 8; x++) {
             other = board.getPiece(x, super.getYpos());
             if (other == null) { // Valid Move
                 addMoveToList(movesList, x, super.getYpos());

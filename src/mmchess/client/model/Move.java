@@ -33,6 +33,27 @@ public class Move {
         check = false;
         checkMate = false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        try {
+            Move other = (Move)o;
+            if (this.hashCode() == other.hashCode()) return true;
+            else return false;
+        } catch (ClassCastException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.startPosX;
+        hash = 97 * hash + this.startPosY;
+        hash = 97 * hash + this.endPosX;
+        hash = 97 * hash + this.endPosY;
+        return hash;
+    }
     
     public int getStartPosX() {
         return startPosX;
@@ -99,6 +120,4 @@ public class Move {
     private boolean shortCastle;
     private boolean check;
     private boolean checkMate;
-    
-
 }

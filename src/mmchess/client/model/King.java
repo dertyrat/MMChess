@@ -54,12 +54,15 @@ public class King extends Piece {
         // Checks for regular move
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-                if (x != 0 && y != 0
-                        && super.getXpos() + x >= 0 && super.getXpos() + x < 8
-                        && super.getYpos() + y >= 0 && super.getYpos() + y < 8) {
+                if ( (x != 0 || y != 0)
+                        && (super.getXpos() + x) >= 0 && (super.getXpos() + x) < 8
+                        && (super.getYpos() + y) >= 0 && (super.getYpos() + y) < 8) {
                     other = board.getPiece(super.getXpos()+x, super.getYpos()+y);
-                    if (other == null || other.getColor() != super.getColor()) {
+                    if (other == null) {
                         super.addMoveToList(movesList, super.getXpos()+x, super.getYpos()+y);
+                    } else if (other.getColor() != super.getColor()) {
+                        super.addMoveToList(movesList, super.getXpos()+x, super.getYpos()+y);
+                        movesList.get(movesList.size()-1).setCapture(true);
                     }
                 }
             }
@@ -73,7 +76,7 @@ public class King extends Piece {
             }
             
             // Checks for Queen-side castle (long castle)
-            if (row[0].getClass() == Rook.class) {
+            if (row[0] != null && row[0].getClass() == Rook.class) {
                 if ( ((Rook)row[0]).canCastle() ) {
                     boolean longCastle = true;
                     for (int i = 1; i < 4; i++) {
@@ -90,7 +93,7 @@ public class King extends Piece {
             }
             
             // Checks for King-side castle (short castle)
-            if (row[7].getClass() == Rook.class) {
+            if (row[7] != null && row[7].getClass() == Rook.class) {
                 if ( ((Rook)row[7]).canCastle() ) {
                     boolean shortCastle = true;
                     for (int i = 5; i < 7; i++) {

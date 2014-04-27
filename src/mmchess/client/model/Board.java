@@ -13,14 +13,24 @@ public class Board {
     }
     
     public boolean doMove(Move move) {
-        boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
-        boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
-        boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
-        boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
-        
-        return true;
+        if (isMoveValid(move)) {
+            //TODO: if capture move, add captured piece to capture box/list
+            boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
+            boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
+            boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
+            boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
+            return true;
+        } else return false;
     }
-
+    
+    public boolean isMoveValid(Move move) {
+        Move[] validMoves = getPiece(move.getStartPosX(), move.getStartPosY()).getMoves(this);
+        for (Move validMove : validMoves) {
+            if (validMove.equals(move)) return true;
+        }
+        return false;
+    }
+    
     public void resetBoard() {
         boardGrid[0][0] = new Rook (0, 0, Piece.BLACK);
         boardGrid[1][0] = new Knight (1, 0, Piece.BLACK);
