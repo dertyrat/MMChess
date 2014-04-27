@@ -14,11 +14,36 @@ public class Board {
     
     public boolean doMove(Move move) {
         if (isMoveValid(move)) {
-            //TODO: if capture move, add captured piece to capture box/list
+            
+            if (move.isCapture()) {
+                //TODO: if capture move, add captured piece to capture box/list
+            }
+            
+            if (move.isCheck()) {
+                //TODO: write code here
+            }
+            
+            if (move.isCheckMate()) {
+                //TODO: write code here
+            }
+            
+            if (move.isLongCastle()) {
+                boardGrid[3][move.getStartPosY()] = boardGrid[0][move.getStartPosY()];
+                boardGrid[0][move.getStartPosY()] = null;
+                boardGrid[3][move.getEndPosY()].setXpos(3);
+            }
+
+            if (move.isShortCastle()) {
+                boardGrid[5][move.getStartPosY()] = boardGrid[7][move.getStartPosY()];
+                boardGrid[7][move.getStartPosY()] = null;
+                boardGrid[5][move.getEndPosY()].setXpos(5);
+            }
+
             boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
             boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
             boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
             boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
+            
             return true;
         } else return false;
     }

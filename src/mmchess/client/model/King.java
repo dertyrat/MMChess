@@ -86,7 +86,7 @@ public class King extends Piece {
                         }
                     }
                     if (longCastle) {
-                        super.addMoveToList(movesList, 3, super.getYpos());
+                        super.addMoveToList(movesList, 2, super.getYpos());
                         movesList.get(movesList.size()-1).setLongCastle(true);
                     }
                 }

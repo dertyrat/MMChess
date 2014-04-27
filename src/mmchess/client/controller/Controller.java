@@ -77,8 +77,6 @@ public class Controller implements Initializable {
                 
                 // Draw Valid Moves indicators
                 int[] moveFrom = (int[]) selectedCell.getUserData();
-                // DEBUG: remove from final version
-                System.out.println("Cell: " + moveFrom[0] + "," + moveFrom[1]);
                 // END DEBUG
                 validMoves = model.getValidMoves(moveFrom[0], moveFrom[1]);
                 for (Move move : validMoves) {
@@ -111,21 +109,55 @@ public class Controller implements Initializable {
                         .getStyleClass().removeAll("validMove");
             }
             
-            // TODO: Insert the move creation code here.
-            // NOTE: Currently does the actual move for testing purposes, in final
-            //       version, this will call a method of the model instead
-            if (model.doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) ) {
-                this.doMove(new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1]));
+            Move newMove = new Move(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1]);
+            
+            for (Move move : validMoves) {
+                if (move.equals(newMove)) {
+                    newMove = move;
+                }
+            }
+            
+            if (model.doMove(newMove) ) {
+                this.doMove(newMove);
+                System.out.println("Move: " + newMove.getStartPosX() + "," + newMove.getStartPosY() + " -> " + newMove.getEndPosX() + "," + newMove.getEndPosY());
+                System.out.println("      Capture:" + newMove.isCapture());
+                System.out.println("      LCastle:" + newMove.isLongCastle());
+                System.out.println("      SCastle:" + newMove.isShortCastle());
+                System.out.println("        Check:" + newMove.isCheck());
+                System.out.println("      ChkMate:" + newMove.isCheckMate());
             }
         }
     }
     
     public void doMove(Move move) {
+        if (move.isCapture()) {
+            //TODO: if capture move, add captured piece to capture box/list
+        }
+
+        if (move.isCheck()) {
+            //TODO: write code here
+        }
+
+        if (move.isCheckMate()) {
+            //TODO: write code here
+        }
+
+        if (move.isLongCastle()) {
+            boardCells[3][move.getStartPosY()].setImage(
+                    boardCells[0][move.getStartPosY()].getImage());
+            boardCells[0][move.getStartPosY()].setImage(null);
+        }
+
+        if (move.isShortCastle()) {
+            boardCells[5][move.getStartPosY()].setImage(
+                    boardCells[7][move.getStartPosY()].getImage());
+            boardCells[7][move.getStartPosY()].setImage(null);
+        }
+
         boardCells[move.getEndPosX()][move.getEndPosY()].setImage(
                 boardCells[move.getStartPosX()][move.getStartPosY()].getImage());
         boardCells[move.getStartPosX()][move.getStartPosY()].setImage(null);
     }
-    
     
     @FXML
     private GridPane boardGrid;
