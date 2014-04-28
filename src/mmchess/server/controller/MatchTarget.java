@@ -19,6 +19,11 @@ public class MatchTarget implements Runnable{
     private Board board;
     private int turn;
 
+    /**
+     * Target for the match thread
+     * @param p1 player 1's socket
+     * @param p2 player 2's socket
+     */
     public MatchTarget(Socket p1, Socket p2) {
         // initialize sockets
         this.p1 = p1;
@@ -55,6 +60,10 @@ public class MatchTarget implements Runnable{
         turn = 0;
     }
 
+    /**
+     * Alternates between players, sending and receiving turns. Executed on
+     * thread start.
+     */
     @Override
     public void run() {
         Move move;
