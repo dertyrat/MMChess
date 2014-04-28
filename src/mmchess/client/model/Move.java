@@ -16,6 +16,11 @@
 
 package mmchess.client.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 /**
  *
  * @author Matthew
@@ -120,4 +125,5 @@ public class Move {
     private boolean shortCastle;
     private boolean check;
     private boolean checkMate;
+
 }

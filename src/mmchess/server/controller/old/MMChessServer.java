@@ -1,6 +1,4 @@
-package mmchess.server.old;
-
-import mmchess.server.old.ServerThread;
+package mmchess.server.controller.old;
 
 import java.io.*;
 import java.net.ServerSocket;
