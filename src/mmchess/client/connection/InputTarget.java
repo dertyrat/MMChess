@@ -32,6 +32,9 @@ public class InputTarget extends Observable implements Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            if (e instanceof IllegalStateException) {
+                System.out.println(e.getCause());
+            }
         }
     }
 

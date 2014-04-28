@@ -1,8 +1,8 @@
 package mmchess.server.controller;
 
 
-import mmchess.server.model.Board;
-import mmchess.server.model.Move;
+import mmchess.client.model.Board;
+import mmchess.client.model.Move;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +13,7 @@ import java.net.Socket;
  * @author Travis Meares
  */
 public class MatchTarget implements Runnable{
-    private Socket p1, p2;
+//    private Socket p1, p2;
     private ObjectInputStream p1In, p2In;
     private ObjectOutputStream p1Out, p2Out;
     private Board board;
@@ -24,28 +24,30 @@ public class MatchTarget implements Runnable{
      * @param p1 player 1's socket
      * @param p2 player 2's socket
      */
-    public MatchTarget(Socket p1, Socket p2) {
+    public MatchTarget(ObjectInputStream p1In, ObjectOutputStream p1Out, ObjectInputStream p2In, ObjectOutputStream p2Out) {
         // initialize sockets
-        this.p1 = p1;
-        this.p2 = p2;
+        this.p1In = p1In;
+        this.p1Out = p1Out;
+        this.p2In = p2In;
+        this.p2Out = p2Out;
         // initialize p1's streams
-        try {
-            p1In = new ObjectInputStream(p1.getInputStream());
-            p1Out = new ObjectOutputStream(p1.getOutputStream());
-        } catch (IOException e) {
-            System.out.printf("%s\n", "Failed to initialize p1's streams.");
-            e.printStackTrace();
-            close();
-        }
+//        try {
+//            p1In = new ObjectInputStream(p1.getInputStream());
+//            p1Out = new ObjectOutputStream(p1.getOutputStream());
+//        } catch (IOException e) {
+//            System.out.printf("%s\n", "Failed to initialize p1's streams.");
+//            e.printStackTrace();
+//            //close();
+//        }
         // initialize p2's streams
-        try {
-            p2In = new ObjectInputStream(p2.getInputStream());
-            p2Out = new ObjectOutputStream(p2.getOutputStream());
-        } catch (IOException e) {
-            System.out.printf("%s\n", "Failed to initialize p2's streams.");
-            e.printStackTrace();
-            close();
-        }
+//        try {
+//            p2In = new ObjectInputStream(p2.getInputStream());
+//            p2Out = new ObjectOutputStream(p2.getOutputStream());
+//        } catch (IOException e) {
+//            System.out.printf("%s\n", "Failed to initialize p2's streams.");
+//            e.printStackTrace();
+//            //close();
+//        }
         // initialize colors
         try {
             p1Out.writeObject("CLR W");
@@ -53,10 +55,10 @@ public class MatchTarget implements Runnable{
         } catch (IOException e) {
             System.out.printf("%s\n", "Failed to initialize players' colors.");
             e.printStackTrace();
-            close();
+            //close();
         }
         // initialize turn counter
-        board = new Board();
+//        board = new Board();
         turn = 0;
     }
 
@@ -71,26 +73,36 @@ public class MatchTarget implements Runnable{
             while (true) {//!board.isGameOver) {
                 if (turn%2 == 0) {
                     // get p1's move
-                    do {
+                    //do {
+                        System.out.println("Sending TRN key"); 
                         p1Out.writeObject("TRN");
+                        System.out.println("Waiting on p1 move");
                         move = (Move) p1In.readObject();
-                    } while (!board.doMove(move));
+                        System.out.println("p1 move recieved, sending to both clients");
+                    //} while (!board.doMove(move));
                     // send p1's move to clients
                     p1Out.writeObject(move);
                     p2Out.writeObject(move);
+                    System.out.println("Move sent to both clients");
                     // increment turn counter
                     turn++;
+                    System.out.println("turn incremented");
                 } else if (turn%2 == 1) {
                     // get p2's move
-                    do {
+                    //do {
+                        System.out.println("Sending TRN key"); 
                         p2Out.writeObject("TRN");
+                        System.out.println("Waiting on p1 move");
                         move = (Move) p2In.readObject();
-                    } while (!board.doMove(move));
+                        System.out.println("p1 move recieved, sending to both clients");
+                    //} while (!board.doMove(move));
                     // send p2's move to clients
                     p1Out.writeObject(move);
                     p2Out.writeObject(move);
+                    System.out.println("Move sent to both clients");
                     // increment turn counter
                     turn++;
+                    System.out.println("turn incremented");
                 }
             }
             // handle game over
@@ -100,13 +112,13 @@ public class MatchTarget implements Runnable{
         }
     }
 
-    private void close() {
-        try {
-            p1.close();
-            p2.close();
-        } catch (IOException e) {
-            System.out.printf("%s\n", "Failed to close sockets.");
-            e.printStackTrace();
-        }
-    }
+//    private void close() {
+//        try {
+//            p1.close();
+//            p2.close();
+//        } catch (IOException e) {
+//            System.out.printf("%s\n", "Failed to close sockets.");
+//            e.printStackTrace();
+//        }
+//    }
 }

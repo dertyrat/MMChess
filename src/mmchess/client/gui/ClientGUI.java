@@ -7,6 +7,7 @@
 package mmchess.client.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,6 +28,8 @@ public class ClientGUI extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        
+        Platform.setImplicitExit(false);
     }
 
     /**

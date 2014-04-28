@@ -19,13 +19,14 @@ package mmchess.client.model;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 /**
  *
  * @author Matthew
  */
-public class Move {
+public class Move implements Serializable {
 
     public Move(int startPosX, int startPosY, int endPosX, int endPosY) {
         this.startPosX = startPosX;
@@ -45,16 +46,8 @@ public class Move {
     public Move(Class pieceType, int startPosX, int startPosY, int endPosX, int endPosY) {
         this(startPosX, startPosY, endPosX, endPosY);
         this.pieceType = pieceType;
-        /*
-        if (Bishop.class == pieceType) this.pieceType = 'B';
-        else if (King.class == pieceType) this.pieceType = 'K';
-        else if (Knight.class == pieceType) this.pieceType = 'N';
-        else if (Pawn.class == pieceType) this.pieceType = '\u0000';
-        else if (Queen.class == pieceType) this.pieceType = 'Q';
-        else if (Rook.class == pieceType) this.pieceType = 'R';
-        */
     }
-
+    
     @Override
     public boolean equals(Object o) {
         try {

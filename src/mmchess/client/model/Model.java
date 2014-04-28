@@ -24,10 +24,12 @@ public class Model {
     
     public Model () {
         gameBoard = new Board();
+        playerTurn = false;
     }
     
     public void newGame() {
         gameBoard.resetBoard();
+        playerTurn = false;
     }
     
     public boolean doMove(Move move) {
@@ -39,8 +41,20 @@ public class Model {
     }
     
     public boolean isMoveValid(Move move) {
-        return gameBoard.isMoveValid(move);
+        if (playerTurn && gameBoard.getPiece(move.getStartPosX(), move.getStartPosY()).getColor() == playerColor) {
+            return gameBoard.isMoveValid(move);
+        } else return false;
+    }
+    
+    public void setPlayerColor(int playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    public void setPlayerTurn(boolean playerTurn) {
+        this.playerTurn = playerTurn;
     }
     
     private final Board gameBoard;
+    private int playerColor;
+    private boolean playerTurn;
 }

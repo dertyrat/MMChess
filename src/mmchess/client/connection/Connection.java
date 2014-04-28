@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import javafx.application.Platform;
 
 /**
  * @author Travis Meares
@@ -34,11 +35,12 @@ public class Connection {
             //
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             // wait for color assignment
-            color = (Character) inputStream.readObject();
+            //color = (Character) inputStream.readObject();
             // create input thread
             inputTarget = new InputTarget(controller, inputStream);
-            Thread inputThread = new Thread(inputTarget);
-            inputThread.start();
+//            Thread inputThread = new Thread(inputTarget);
+//            inputThread.start();
+            Platform.runLater(inputTarget);
         } catch (Exception e) {
             e.printStackTrace();
         }

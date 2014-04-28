@@ -27,6 +27,7 @@ import javafx.scene.text.Text;
 import mmchess.client.connection.Connection;
 import mmchess.client.model.Model;
 import mmchess.client.model.Move;
+import mmchess.server.model.Piece;
 
 /**
  *
@@ -57,13 +58,16 @@ public class Controller implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg.getClass()==Move.class) {
+        if (arg instanceof Move) {
             // update board state/GUI
-            doMove((Move)arg);
-        } else if (arg.getClass()==String.class) {
+            this.doMove((Move)arg);
+        } else if (arg instanceof String) {
             if (((String)arg).equals("TRN")) {
-                // set turn flag / alert player
-
+                model.setPlayerTurn(true);
+            } else if (((String)arg).equals("CLR W")) {
+                model.setPlayerColor(Piece.WHITE);
+            } else if (((String)arg).equals("CLR B")) {
+                model.setPlayerColor(Piece.BLACK);
             }
         }
     }
@@ -186,9 +190,9 @@ public class Controller implements Initializable, Observer {
                 }
             }
             
-            if (model.isMoveValid(newMove)) {//model.doMove(newMove) ) {
+            if (model.isMoveValid(newMove)) {
                 connection.sendMove(newMove);
-                //this.doMove(newMove);
+                model.setPlayerTurn(false);
             }
         }
     }
