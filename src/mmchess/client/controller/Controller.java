@@ -7,6 +7,8 @@
 package mmchess.client.controller;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -29,7 +31,7 @@ import mmchess.client.model.Move;
  *
  * @author Matthew
  */
-public class Controller implements Initializable {
+public class Controller implements Initializable, Observer {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -48,6 +50,19 @@ public class Controller implements Initializable {
         }
         movesListObservable = movesList.getChildren();
         model = new Model();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg.getClass()==Move.class) {
+            // update board state/GUI
+            doMove((Move)arg);
+        } else if (arg.getClass()==String.class) {
+            if (((String)arg).equals("TRN")) {
+                // set turn flag / alert player
+
+            }
+        }
     }
     
     @FXML
@@ -233,4 +248,5 @@ public class Controller implements Initializable {
     private static final Image blackKnight = new Image("/mmchess/client/gui/images/bH.png", 46, 46, true, true);
     private static final Image blackKing = new Image("/mmchess/client/gui/images/bK.png", 46, 46, true, true);
     private static final Image blackQueen = new Image("/mmchess/client/gui/images/bQ.png", 46, 46, true, true);
+
 }

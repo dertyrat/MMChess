@@ -1,8 +1,7 @@
-package mmchess.server.old;
+package mmchess.server.controller.old;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 

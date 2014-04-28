@@ -1,4 +1,4 @@
-package mmchess.server.old;
+package mmchess.server.controller.old;
 
 import java.util.ArrayList;
 

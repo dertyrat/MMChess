@@ -1,6 +1,5 @@
 *.class
 .mtj.tmp/
-*.iml
 
 # Package Files #
 *.jar
