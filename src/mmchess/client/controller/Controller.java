@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import mmchess.client.connection.Connection;
 import mmchess.client.model.Model;
 import mmchess.client.model.Move;
 
@@ -50,6 +51,8 @@ public class Controller implements Initializable, Observer {
         }
         movesListObservable = movesList.getChildren();
         model = new Model();
+        
+        connection = new Connection(this);
     }
 
     @Override
@@ -183,14 +186,16 @@ public class Controller implements Initializable, Observer {
                 }
             }
             
-            if (model.doMove(newMove) ) {
-                this.doMove(newMove);
-                
+            if (model.isMoveValid(newMove)) {//model.doMove(newMove) ) {
+                connection.sendMove(newMove);
+                //this.doMove(newMove);
             }
         }
     }
     
     public void doMove(Move move) {
+        model.doMove(move);
+        
         if (move.isCapture()) {
             //TODO: if capture move, add captured piece to capture box/list
         }
@@ -235,6 +240,7 @@ public class Controller implements Initializable, Observer {
     private ObservableList<Node> movesListObservable;
     private Model model;
     private Move[] validMoves;
+    private Connection connection;
     
     private static final Image whitePawn = new Image("/mmchess/client/gui/images/wP.png", 46, 46, true, true);
     private static final Image whiteRook = new Image("/mmchess/client/gui/images/wR.png", 46, 46, true, true);

@@ -68,7 +68,7 @@ public class MatchTarget implements Runnable{
     public void run() {
         Move move;
         try {
-            while (!board.isGameOver) {
+            while (true) {//!board.isGameOver) {
                 if (turn%2 == 0) {
                     // get p1's move
                     do {
@@ -94,7 +94,7 @@ public class MatchTarget implements Runnable{
                 }
             }
             // handle game over
-            close();
+            //close();
         } catch (Exception e) {
             e.printStackTrace();
         }

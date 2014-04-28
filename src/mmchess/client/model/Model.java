@@ -38,5 +38,9 @@ public class Model {
         return gameBoard.getPiece(startPosX, startPosY).getMoves(gameBoard);
     }
     
+    public boolean isMoveValid(Move move) {
+        return gameBoard.isMoveValid(move);
+    }
+    
     private final Board gameBoard;
 }
