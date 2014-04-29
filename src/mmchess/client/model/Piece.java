@@ -34,7 +34,7 @@ public abstract class Piece {
         this.ypos = ypos;
         //System.out.println(this.getClass().toString());
     }
-    
+
     public abstract Move[] getMoves(Board board);
     
     protected void addMoveToList(ArrayList<Move> movesList, int x, int y) {

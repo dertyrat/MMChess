@@ -125,6 +125,7 @@ public class Controller implements Initializable, Observer {
     @FXML
     public void exitApplication()
     {
+        connection.end();
         Platform.exit();
     }
 

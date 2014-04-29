@@ -32,15 +32,11 @@ public class Connection {
             // connect to server
             socket = new Socket(HOST, PORT);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-            //
+            // initialize and run the input thread
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            // wait for color assignment
-            // color = (Character) inputStream.readObject();
-            // create input thread
             inputTarget = new InputTarget(controller, inputStream);
             Thread inputThread = new Thread(inputTarget);
             inputThread.start();
-            //inputTarget.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
