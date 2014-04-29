@@ -13,7 +13,9 @@ public class Board implements Cloneable {
         // Setting up default piece placement
         boardGrid = new Piece[8][8];
         resetBoard();
-        
+        check = false;
+        checkMate = false;
+        staleMate = false;
 //        hasChanged = new SimpleBooleanProperty(false);
     }
 
@@ -101,7 +103,6 @@ public class Board implements Cloneable {
             boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
             
 //            hasChanged.set(!hasChanged.get());
-            
             return true;
         //} else return false;
     }
@@ -172,40 +173,8 @@ public class Board implements Cloneable {
         }
         
         return refinedMoves;
-//        return validMoves;
     }
 
-//    private void checkMovesForCheck(Move[] validMoves, int currentColor) throws CloneNotSupportedException {
-//        for (Move move : validMoves) {
-//            Board nextState = (Board)this.clone();
-//            nextState.doMove(move);
-//            King enemyKing = null;
-//            for (int x = 0; x < 8; x++) {
-//                for (int y = 0; y < 8; y++) {
-//                    if (nextState.getPiece(x, y) != null
-//                            && nextState.getPiece(x, y) instanceof King
-//                            && nextState.getPiece(x, y).getColor() != currentColor) {
-//                        enemyKing = (King) nextState.getPiece(x, y);
-//                    }
-//                }
-//            }
-//            if (enemyKing != null) {
-//                for (int x = 0; x < 8; x++) {
-//                    for (int y = 0; y < 8; y++) {
-//                        if (nextState.getPiece(x, y) != null
-//                                && nextState.getPiece(x, y).getColor() == currentColor) {
-//                            for (Move nextMove : nextState.getPiece(x, y).getMoves(nextState)) {
-//                                if (nextMove.getEndPosX() == enemyKing.getXpos()
-//                                        && nextMove.getEndPosY() == enemyKing.getYpos()) {
-//                                    move.setCheck(true);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     public void resetBoard() {
         boardGrid[0][0] = new Rook (0, 0, Piece.BLACK);
@@ -242,6 +211,86 @@ public class Board implements Cloneable {
 //        hasChanged.addListener(l);
 //    }
     
+    public void setCheckFlag() {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (boardGrid[x][y] != null) {
+                    for (Move move : this.getValidMoves(x, y)) {
+                        if (boardGrid[move.getEndPosX()][move.getEndPosY()] != null
+                                && boardGrid[move.getEndPosX()][move.getEndPosY()] instanceof King
+                                && boardGrid[move.getEndPosX()][move.getEndPosY()].getColor() !=
+                                   boardGrid[move.getStartPosX()][move.getStartPosY()].getColor()) {
+                            check = true;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        check = false;
+    }
+    
+    public void setCheckMateFlag() {
+        int currentColor = Piece.WHITE;
+        checkMate = false;
+        ArrayList<Move> totalMoves = new ArrayList<>();
+        try {
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    if (boardGrid[x][y] != null) {
+                        Move[] moves = boardGrid[x][y].getMoves((Board) this.clone());
+                        for (Move validMove : refineMovesList(moves, currentColor)) {
+                            totalMoves.add(validMove);
+                        }
+                    }
+                }
+            }
+            if (totalMoves.size() == 0) {
+                if (check) {
+                    checkMate = true;
+                    return;
+                } else {
+                    staleMate = true;
+                    return;
+                }
+            }
+            currentColor = Piece.BLACK;
+            totalMoves = new ArrayList<>();
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    if (boardGrid[x][y] != null) {
+                        Move[] moves = boardGrid[x][y].getMoves((Board) this.clone());
+                        for (Move validMove : refineMovesList(moves, currentColor)) {
+                            totalMoves.add(validMove);
+                        }
+                    }
+                }
+            }
+            if (totalMoves.size() == 0) {
+                if (check) {
+                    checkMate = true;
+                    return;
+                } else {
+                    staleMate = true;
+                    return;
+                }
+            }
+            checkMate = false;
+            staleMate = false;
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        checkMate = false;
+    }
+    
+    public boolean isCheck() { return check; }
+    public boolean isCheckMate() { return checkMate; }
+    public boolean isStaleMate() { return staleMate; }
+    
     private Piece[][] boardGrid;
+    private boolean check;
+    private boolean checkMate;
+    private boolean staleMate;
 //    private SimpleBooleanProperty hasChanged;
 }

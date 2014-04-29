@@ -21,7 +21,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -64,6 +66,7 @@ public class Controller implements Initializable, Observer {
             }
         }
         movesListObservable = movesList.getChildren();
+        
         model = new Model();
         try {
             currentBoard = (Board) model.getBoard().clone();
@@ -84,7 +87,7 @@ public class Controller implements Initializable, Observer {
         //model.addObserverToBoard(this);
         connection = new Connection(this);
         
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(40), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 updateBoard();
@@ -99,6 +102,8 @@ public class Controller implements Initializable, Observer {
         if (arg instanceof Move) {
             // update board state/GUI
             model.doMove((Move)arg);
+            model.getBoard().setCheckFlag();
+            model.getBoard().setCheckMateFlag();
             //updateBoard();
         } else if (arg instanceof String) {
             if (((String)arg).equals("TRN")) {
@@ -207,15 +212,16 @@ public class Controller implements Initializable, Observer {
                 } 
             }
         }
-        /*
-        // Code to rotate the board so black player is on bottom
-        if (boardGrid.getRotate() == 0) {
+        
+        if (model.getPlayerColor() == Piece.BLACK) {
             boardGrid.setRotate(180);
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     boardCells[i][j].setRotate(-180);
                 }
             }
+            bottomPlayerIcon.setImage(blackKing);
+            topPlayerIcon.setImage(whiteKing);
         } else {
             boardGrid.setRotate(0);
             for (int i = 0; i < 8; i++) {
@@ -223,8 +229,33 @@ public class Controller implements Initializable, Observer {
                     boardCells[i][j].setRotate(0);
                 }
             }
+            bottomPlayerIcon.setImage(whiteKing);
+            topPlayerIcon.setImage(blackKing);
         }
-        */
+        
+        if (model.isPlayerTurn()) {
+            bottomTurnLight.setImage(turnIconOn);
+            topTurnLight.setImage(turnIconOff);
+        } else {
+            bottomTurnLight.setImage(turnIconOff);
+            topTurnLight.setImage(turnIconOn);
+        }
+        
+        while(statusBox.getChildren().size() > 0) {
+            statusBox.getChildren().remove(0);
+        }
+        if (model.getBoard().isCheckMate()) {
+            statusBox.getChildren().add(new Label("Checkmate!"));
+        } else if (model.getBoard().isStaleMate()) {
+            statusBox.getChildren().add(new Label("Stalemate..."));
+        } else if (model.getBoard().isCheck()) {
+            statusBox.getChildren().add(new Label("Check"));
+        }
+        
+        if (statusBox.getChildren().size() > 0) {
+            ((Label)statusBox.getChildren().get(0)).setAlignment(Pos.CENTER);
+            ((Label)statusBox.getChildren().get(0)).setFont(Font.font("System", 18));
+        }
     }
     
     @FXML
@@ -328,6 +359,16 @@ public class Controller implements Initializable, Observer {
     private GridPane boardGrid;
     @FXML
     private VBox movesList;
+    @FXML
+    private ImageView topTurnLight;
+    @FXML
+    private ImageView bottomTurnLight;
+    @FXML
+    private ImageView topPlayerIcon;
+    @FXML
+    private ImageView bottomPlayerIcon;
+    @FXML
+    private VBox statusBox;
     
     private ImageView[][] boardCells = new ImageView[8][8];
     private ImageView selectedCell = null;
@@ -336,6 +377,7 @@ public class Controller implements Initializable, Observer {
     private Move[] validMoves;
     private Connection connection;
     private Board currentBoard;
+    
     private static final Image whitePawn = new Image("/mmchess/client/gui/images/wP.png", 46, 46, true, true);
     private static final Image whiteRook = new Image("/mmchess/client/gui/images/wR.png", 46, 46, true, true);
     private static final Image whiteBishop = new Image("/mmchess/client/gui/images/wB.png", 46, 46, true, true);
@@ -348,5 +390,7 @@ public class Controller implements Initializable, Observer {
     private static final Image blackKnight = new Image("/mmchess/client/gui/images/bH.png", 46, 46, true, true);
     private static final Image blackKing = new Image("/mmchess/client/gui/images/bK.png", 46, 46, true, true);
     private static final Image blackQueen = new Image("/mmchess/client/gui/images/bQ.png", 46, 46, true, true);
+    private static final Image turnIconOn = new Image("/mmchess/client/gui/images/TurnIcon_Green.png", 30, 30, true, true);
+    private static final Image turnIconOff = new Image("/mmchess/client/gui/images/TurnIcon_Red.png", 30, 30, true, true);
     
 }

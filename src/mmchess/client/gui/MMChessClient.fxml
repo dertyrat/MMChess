@@ -548,7 +548,7 @@
             <Image url="@images/TurnIcon_Green.png" />
           </image>
         </ImageView>
-        <Button fx:id="testButton" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#updateBoard" text="Update" />
+        <VBox fx:id="statusBox" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="100.0" />
       </children>
     </AnchorPane>
   </children>

@@ -16,8 +16,6 @@
 
 package mmchess.client.model;
 
-import java.util.Observer;
-
 /**
  *
  * @author Matthew
@@ -60,6 +58,14 @@ public class Model {
         return gameBoard;
     }
     
+    public int getPlayerColor() {
+        return playerColor;
+    }
+
+    public boolean isPlayerTurn() {
+        return playerTurn;
+    }
+        
     private final Board gameBoard;
     private int playerColor;
     private boolean playerTurn;
