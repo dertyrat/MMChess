@@ -16,6 +16,8 @@
 
 package mmchess.client.model;
 
+import java.util.Observer;
+
 /**
  *
  * @author Matthew
@@ -52,6 +54,10 @@ public class Model {
 
     public void setPlayerTurn(boolean playerTurn) {
         this.playerTurn = playerTurn;
+    }
+    
+    public Board getBoard() {
+        return gameBoard;
     }
     
     private final Board gameBoard;

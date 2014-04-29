@@ -29,7 +29,7 @@ public class ClientGUI extends Application {
         stage.setResizable(false);
         stage.show();
         
-        Platform.setImplicitExit(false);
+        //Platform.setImplicitExit(false);
     }
 
     /**

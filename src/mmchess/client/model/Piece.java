@@ -32,7 +32,7 @@ public abstract class Piece {
         this.color = color;
         this.xpos = xpos;
         this.ypos = ypos;
-        System.out.println(this.getClass().toString());
+        //System.out.println(this.getClass().toString());
     }
     
     public abstract Move[] getMoves(Board board);

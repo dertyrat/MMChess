@@ -92,9 +92,9 @@ public class MatchTarget implements Runnable{
                     //do {
                         System.out.println("Sending TRN key"); 
                         p2Out.writeObject("TRN");
-                        System.out.println("Waiting on p1 move");
+                        System.out.println("Waiting on p2 move");
                         move = (Move) p2In.readObject();
-                        System.out.println("p1 move recieved, sending to both clients");
+                        System.out.println("p2 move recieved, sending to both clients");
                     //} while (!board.doMove(move));
                     // send p2's move to clients
                     p1Out.writeObject(move);

@@ -1,11 +1,16 @@
 package mmchess.client.model;
 
+//import javafx.beans.property.SimpleBooleanProperty;
+//import javafx.beans.value.ChangeListener;
+
 public class Board {
     
     public Board() {
         // Setting up default piece placement
         boardGrid = new Piece[8][8];
         resetBoard();
+        
+//        hasChanged = new SimpleBooleanProperty(false);
     }
     
     public Piece getPiece(int xPos, int yPos) {
@@ -43,6 +48,8 @@ public class Board {
             boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
             boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
             boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
+            
+//            hasChanged.set(!hasChanged.get());
             
             return true;
         } else return false;
@@ -87,5 +94,10 @@ public class Board {
         boardGrid[7][7] = new Rook (7, 7, Piece.WHITE);
     }
     
+//    public void addListenerToChanged(ChangeListener l) {
+//        hasChanged.addListener(l);
+//    }
+    
     private Piece[][] boardGrid;
+//    private SimpleBooleanProperty hasChanged;
 }

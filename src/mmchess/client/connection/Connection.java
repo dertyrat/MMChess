@@ -35,12 +35,12 @@ public class Connection {
             //
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             // wait for color assignment
-            //color = (Character) inputStream.readObject();
+            // color = (Character) inputStream.readObject();
             // create input thread
             inputTarget = new InputTarget(controller, inputStream);
-//            Thread inputThread = new Thread(inputTarget);
-//            inputThread.start();
-            Platform.runLater(inputTarget);
+            Thread inputThread = new Thread(inputTarget);
+            inputThread.start();
+            //inputTarget.run();
         } catch (Exception e) {
             e.printStackTrace();
         }

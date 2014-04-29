@@ -548,7 +548,7 @@
             <Image url="@images/TurnIcon_Green.png" />
           </image>
         </ImageView>
-        <Button fx:id="testButton" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#test" text="TEST!" />
+        <Button fx:id="testButton" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#updateBoard" text="Update" />
       </children>
     </AnchorPane>
   </children>

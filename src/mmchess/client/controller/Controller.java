@@ -10,9 +10,13 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,12 +26,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import mmchess.client.connection.Connection;
+import mmchess.client.model.Bishop;
+import mmchess.client.model.Board;
+import mmchess.client.model.King;
+import mmchess.client.model.Knight;
 import mmchess.client.model.Model;
 import mmchess.client.model.Move;
-import mmchess.server.model.Piece;
+import mmchess.client.model.Pawn;
+import mmchess.client.model.Piece;
+import mmchess.client.model.Queen;
+import mmchess.client.model.Rook;
 
 /**
  *
@@ -52,15 +63,37 @@ public class Controller implements Initializable, Observer {
         }
         movesListObservable = movesList.getChildren();
         model = new Model();
+        currentBoard = model.getBoard();
         
+//        currentBoard.addListenerToChanged(new ChangeListener<Boolean>() {
+//
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, 
+//                    Boolean oldValue, Boolean newValue) {
+//                updateBoard();
+//            }
+//            
+//        });
+        
+        //model.addObserverToBoard(this);
         connection = new Connection(this);
+        
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                updateBoard();
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Move) {
             // update board state/GUI
-            this.doMove((Move)arg);
+            model.doMove((Move)arg);
+            //updateBoard();
         } else if (arg instanceof String) {
             if (((String)arg).equals("TRN")) {
                 model.setPlayerTurn(true);
@@ -117,9 +150,53 @@ public class Controller implements Initializable, Observer {
     }
     
     @FXML
-    public void test() {
-        
-        
+    public void updateBoard() {        
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece currentPiece = currentBoard.getPiece(x, y);
+                
+                if (currentPiece == null) {
+                    boardCells[x][y].setImage(null);
+                } else if (currentPiece instanceof Rook) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackRook);
+                    } else {
+                        boardCells[x][y].setImage(whiteRook);
+                    }
+                } else if (currentPiece instanceof Bishop) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackBishop);
+                    } else {
+                        boardCells[x][y].setImage(whiteBishop);
+                    }
+                } else if (currentPiece instanceof Knight) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackKnight);
+                    } else {
+                        boardCells[x][y].setImage(whiteKnight);
+                    }
+                } else if (currentPiece instanceof King) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackKing);
+                    } else {
+                        boardCells[x][y].setImage(whiteKing);
+                    }
+                } else if (currentPiece instanceof Queen) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackQueen);
+                    } else {
+                        boardCells[x][y].setImage(whiteQueen);
+                    }
+                } else if (currentPiece instanceof Pawn) {
+                    if (currentPiece.getColor() == Piece.BLACK) {
+                        boardCells[x][y].setImage(blackPawn);
+                    } else {
+                        boardCells[x][y].setImage(whitePawn);
+                    }
+                } 
+            }
+        }
+        /*
         // Code to rotate the board so black player is on bottom
         if (boardGrid.getRotate() == 0) {
             boardGrid.setRotate(180);
@@ -136,6 +213,7 @@ public class Controller implements Initializable, Observer {
                 }
             }
         }
+        */
     }
     
     @FXML
@@ -198,7 +276,7 @@ public class Controller implements Initializable, Observer {
     }
     
     public void doMove(Move move) {
-        model.doMove(move);
+        // model.doMove(move);
         
         if (move.isCapture()) {
             //TODO: if capture move, add captured piece to capture box/list
@@ -245,7 +323,7 @@ public class Controller implements Initializable, Observer {
     private Model model;
     private Move[] validMoves;
     private Connection connection;
-    
+    private Board currentBoard;
     private static final Image whitePawn = new Image("/mmchess/client/gui/images/wP.png", 46, 46, true, true);
     private static final Image whiteRook = new Image("/mmchess/client/gui/images/wR.png", 46, 46, true, true);
     private static final Image whiteBishop = new Image("/mmchess/client/gui/images/wB.png", 46, 46, true, true);
@@ -258,5 +336,5 @@ public class Controller implements Initializable, Observer {
     private static final Image blackKnight = new Image("/mmchess/client/gui/images/bH.png", 46, 46, true, true);
     private static final Image blackKing = new Image("/mmchess/client/gui/images/bK.png", 46, 46, true, true);
     private static final Image blackQueen = new Image("/mmchess/client/gui/images/bQ.png", 46, 46, true, true);
-
+    
 }
