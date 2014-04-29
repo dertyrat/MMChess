@@ -26,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -161,8 +162,17 @@ public class Controller implements Initializable, Observer {
         boardCells[6][7].setImage(Controller.whiteKnight);
         boardCells[7][7].setImage(Controller.whiteRook);
         
-        while (movesListObservable.size() != 0) {
+        while (movesListObservable.size() > 0) {
             movesListObservable.remove(0);
+        }
+        while (topGraveyard.getChildren().size() > 0) {
+            topGraveyard.getChildren().remove(0);
+        }
+        while (bottomGraveyard.getChildren().size() > 0) {
+            bottomGraveyard.getChildren().remove(0);
+        }
+        while(statusBox.getChildren().size() > 0) {
+            statusBox.getChildren().remove(0);
         }
     }
 
@@ -266,27 +276,11 @@ public class Controller implements Initializable, Observer {
         }
         
         // Adds the last move to the GUI's moves list
-        Move lastMove = model.getBoard().getLastMove();
-        if (lastMove != null) {
-            String tempString;
-            if (model.getBoard().getPiece(lastMove.getEndPosX(), lastMove.getEndPosY()).getColor() == Piece.WHITE) {
-                tempString = (movesListObservable.size()+1) + ". " + lastMove.toString();
-            } else {
-                tempString = ((Text) movesListObservable.get(movesListObservable.size()-1)).textProperty().get();
-                movesListObservable.remove(movesListObservable.size()-1);
-                tempString += " " + lastMove.toString();
-            }
-            if (model.getBoard().isCheck()) {
-                tempString += "+";
-            }
-            if (model.getBoard().isMate()) {
-                tempString += "+";
-            }
-            Text tempText = new Text(tempString);
-            tempText.setFont(Font.font("System", 16));
-            movesListObservable.add(tempText);
-        }
+        appendMoveNotation();
+        // Adds the last captured piece to the appropriate graveyart.
+        addPieceToGraveyard();
     }
+
 
     /**
      * Handles the cell-clicked event by displaying the available moves for the
@@ -378,6 +372,76 @@ public class Controller implements Initializable, Observer {
 
     }
     
+    private Image getPieceImage(Class c, int color) {
+        if (c == King.class) {
+            if (color == Piece.WHITE) return Controller.whiteKing;
+            else return Controller.blackKing;
+        } else if (c == Queen.class) {
+            if (color == Piece.WHITE) return Controller.whiteQueen;
+            else return Controller.blackQueen;
+        } else if (c == Rook.class) {
+            if (color == Piece.WHITE) return Controller.whiteRook;
+            else return Controller.blackRook;
+        } else if (c == Knight.class) {
+            if (color == Piece.WHITE) return Controller.whiteKnight;
+            else return Controller.blackKnight;
+        } else if (c == Bishop.class) {
+            if (color == Piece.WHITE) return Controller.whiteBishop;
+            else return Controller.blackBishop;
+        } else if (c == Pawn.class) {
+            if (color == Piece.WHITE) return Controller.whitePawn;
+            else return Controller.blackPawn;
+        } else return null;
+    }
+
+    private void appendMoveNotation() {
+        // Adds the last move to the GUI's moves list
+        Move lastMove = model.getBoard().popLastMove();
+        if (lastMove != null) {
+            String tempString;
+            if (model.getBoard().getPiece(lastMove.getEndPosX(), lastMove.getEndPosY()).getColor() == Piece.WHITE) {
+                tempString = (movesListObservable.size()+1) + ". " + lastMove.toString();
+            } else {
+                tempString = ((Text) movesListObservable.get(movesListObservable.size()-1)).textProperty().get();
+                movesListObservable.remove(movesListObservable.size()-1);
+                tempString += " " + lastMove.toString();
+            }
+            if (model.getBoard().isCheck()) {
+                tempString += "+";
+            }
+            if (model.getBoard().isMate()) {
+                tempString += "+";
+            }
+            Text tempText = new Text(tempString);
+            tempText.setFont(Font.font("System", 16));
+            movesListObservable.add(tempText);
+        }
+    }
+    
+    private void addPieceToGraveyard() {
+        Piece capturedPiece = model.getBoard().popLastCapturedPiece();
+        if (capturedPiece != null) {
+            FlowPane whiteGraveyard;
+            FlowPane blackGraveyard;
+            if (model.getPlayerColor() == Piece.WHITE) {
+                whiteGraveyard = bottomGraveyard;
+                blackGraveyard = topGraveyard;
+            } else {
+                whiteGraveyard = topGraveyard;
+                blackGraveyard = bottomGraveyard;
+            }
+            
+            ImageView temp = new ImageView(getPieceImage(capturedPiece.getClass(), capturedPiece.getColor()));
+            temp.setFitHeight(33);
+            temp.setFitWidth(33);
+            if (capturedPiece.getColor() == Piece.WHITE) {
+                whiteGraveyard.getChildren().add(temp);
+            } else {
+                blackGraveyard.getChildren().add(temp);
+            }
+        }
+    }
+    
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -392,6 +456,10 @@ public class Controller implements Initializable, Observer {
     private ImageView bottomPlayerIcon;
     @FXML
     private VBox statusBox;
+    @FXML
+    private FlowPane topGraveyard;
+    @FXML
+    private FlowPane bottomGraveyard;
     
     private ImageView[][] boardCells = new ImageView[8][8];
     private ImageView selectedCell = null;

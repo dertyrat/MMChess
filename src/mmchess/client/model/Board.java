@@ -16,6 +16,8 @@ public class Board implements Cloneable {
         resetBoard();
         check = false;
         mate = false;
+        lastMove = null;
+        lastCapture = null;
     }
 
     /**
@@ -93,7 +95,7 @@ public class Board implements Cloneable {
      */
     public boolean doMove(Move move) {
         if (move.isCapture()) {
-            //
+            lastCapture = boardGrid[move.getEndPosX()][move.getEndPosY()];
         } else if (move.isCheck()) {
             //
         } else if (move.isCheckMate()) {
@@ -296,9 +298,15 @@ public class Board implements Cloneable {
      * to null.
      * @return Move
      */
-    public Move getLastMove() {
+    public Move popLastMove() {
         Move temp = lastMove;
         lastMove = null;
+        return temp;
+    }
+    
+    public Piece popLastCapturedPiece() {
+        Piece temp = lastCapture;
+        lastCapture = null;
         return temp;
     }
     
@@ -306,4 +314,5 @@ public class Board implements Cloneable {
     private boolean check;
     private boolean mate;
     private Move lastMove;
+    private Piece lastCapture;
 }
