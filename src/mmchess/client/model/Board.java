@@ -112,7 +112,8 @@ public class Board implements Cloneable {
         boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
         boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
         boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
-
+        
+        lastMove = move;
         return true;
     }
 
@@ -290,7 +291,19 @@ public class Board implements Cloneable {
         return mate;
     }
     
+    /**
+     * Returns the last move that was done by either player and resets the value
+     * to null.
+     * @return Move
+     */
+    public Move getLastMove() {
+        Move temp = lastMove;
+        lastMove = null;
+        return temp;
+    }
+    
     private Piece[][] boardGrid;
     private boolean check;
     private boolean mate;
+    private Move lastMove;
 }

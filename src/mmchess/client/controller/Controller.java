@@ -264,10 +264,33 @@ public class Controller implements Initializable, Observer {
             ((Label)statusBox.getChildren().get(0)).setAlignment(Pos.CENTER);
             ((Label)statusBox.getChildren().get(0)).setFont(Font.font("System", 18));
         }
+        
+        // Adds the last move to the GUI's moves list
+        Move lastMove = model.getBoard().getLastMove();
+        if (lastMove != null) {
+            String tempString;
+            if (model.getBoard().getPiece(lastMove.getEndPosX(), lastMove.getEndPosY()).getColor() == Piece.WHITE) {
+                tempString = (movesListObservable.size()+1) + ". " + lastMove.toString();
+            } else {
+                tempString = ((Text) movesListObservable.get(movesListObservable.size()-1)).textProperty().get();
+                movesListObservable.remove(movesListObservable.size()-1);
+                tempString += " " + lastMove.toString();
+            }
+            if (model.getBoard().isCheck()) {
+                tempString += "+";
+            }
+            if (model.getBoard().isMate()) {
+                tempString += "+";
+            }
+            Text tempText = new Text(tempString);
+            tempText.setFont(Font.font("System", 16));
+            movesListObservable.add(tempText);
+        }
     }
 
     /**
-     * Updates the GUI when a cell is clicked
+     * Handles the cell-clicked event by displaying the available moves for the
+     * selected piece on the GUI and sending the move to the model.
      * @param e event of the clicked cell
      */
     @FXML
@@ -333,20 +356,6 @@ public class Controller implements Initializable, Observer {
      * @param move the move to be implemented
      */
     public void doMove(Move move) {
-        // model.doMove(move);
-        
-        if (move.isCapture()) {
-            //TODO: if capture move, add captured piece to capture box/list
-        }
-
-        if (move.isCheck()) {
-            //TODO: write code here
-        }
-
-        if (move.isCheckMate()) {
-            //TODO: write code here
-        }
-
         if (move.isLongCastle()) {
             boardCells[3][move.getStartPosY()].setImage(
                     boardCells[0][move.getStartPosY()].getImage());
@@ -363,9 +372,9 @@ public class Controller implements Initializable, Observer {
                 boardCells[move.getStartPosX()][move.getStartPosY()].getImage());
         boardCells[move.getStartPosX()][move.getStartPosY()].setImage(null);
         
-        Text temp = new Text(movesListObservable.size() + ". " + move.toString());
-        temp.setFont(new Font("System", 14));
-        movesListObservable.add(temp);
+        //Text temp = new Text(movesListObservable.size() + ". " + move.toString());
+        //temp.setFont(new Font("System", 14));
+        //movesListObservable.add(temp);
 
     }
     
