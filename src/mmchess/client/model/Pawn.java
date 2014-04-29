@@ -32,8 +32,13 @@ public class Pawn extends Piece {
         } else {
             DIRECTION = 1;
         }
-        
-        firstMove = true;
+        if ((ypos == 6 && color == Piece.WHITE) ||
+            (ypos == 1 && color == Piece.BLACK))
+        {
+            firstMove = true;
+        } else {
+            firstMove = false;
+        }
     }
 
     @Override

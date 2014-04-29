@@ -96,10 +96,6 @@ public class Board implements Cloneable {
     public boolean doMove(Move move) {
         if (move.isCapture()) {
             lastCapture = boardGrid[move.getEndPosX()][move.getEndPosY()];
-        } else if (move.isCheck()) {
-            //
-        } else if (move.isCheckMate()) {
-            //TODO: write code here
         } else if (move.isLongCastle()) {
             boardGrid[3][move.getStartPosY()] = boardGrid[0][move.getStartPosY()];
             boardGrid[0][move.getStartPosY()] = null;
@@ -108,6 +104,13 @@ public class Board implements Cloneable {
             boardGrid[5][move.getStartPosY()] = boardGrid[7][move.getStartPosY()];
             boardGrid[7][move.getStartPosY()] = null;
             boardGrid[5][move.getEndPosY()].setXpos(5);
+        }
+        // if pawn is moving to end of board, convert to pawn to queen
+        if ((move.getEndPosY() == 0 || move.getEndPosY() == 7) &&
+             boardGrid[move.getStartPosX()][move.getStartPosY()] instanceof Pawn)
+        {
+            boardGrid[move.getStartPosX()][move.getStartPosY()] =
+                    new Queen(move.getStartPosX(), move.getStartPosY(), boardGrid[move.getStartPosX()][move.getStartPosY()].getColor());
         }
 
         boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
