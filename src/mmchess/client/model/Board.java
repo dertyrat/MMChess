@@ -1,6 +1,5 @@
 package mmchess.client.model;
 
-//import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -8,17 +7,22 @@ import java.util.logging.Logger;
 
 
 public class Board implements Cloneable {
-    
+    /**
+     * Constructor for the board model, initializes the fields
+     */
     public Board() {
         // Setting up default piece placement
         boardGrid = new Piece[8][8];
         resetBoard();
         check = false;
-        checkMate = false;
-        staleMate = false;
-//        hasChanged = new SimpleBooleanProperty(false);
+        mate = false;
     }
 
+    /**
+     * Returns a deep copy of the board model
+     * @return a deep copy of the board model
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         Board newBoard = new Board();
@@ -71,42 +75,52 @@ public class Board implements Cloneable {
         
         return newBoard;
     }
-    
-    
-    
+
+    /**
+     * Gets the piece in the given location
+     * @param xPos the horizontal array index of the piece (0-7)
+     * @param yPos the vertical array index of the piece (0-7)
+     * @return the piece object at the given location
+     */
     public Piece getPiece(int xPos, int yPos) {
         return boardGrid[xPos][yPos];
     }
-    
-    public boolean doMove(Move move) {
-        //if (isMoveValid(move)) {
-            
-            if (move.isCapture()) {
-                //
-            } else if (move.isCheck()) {
-                //
-            } else if (move.isCheckMate()) {
-                //TODO: write code here
-            } else if (move.isLongCastle()) {
-                boardGrid[3][move.getStartPosY()] = boardGrid[0][move.getStartPosY()];
-                boardGrid[0][move.getStartPosY()] = null;
-                boardGrid[3][move.getEndPosY()].setXpos(3);
-            } else if (move.isShortCastle()) {
-                boardGrid[5][move.getStartPosY()] = boardGrid[7][move.getStartPosY()];
-                boardGrid[7][move.getStartPosY()] = null;
-                boardGrid[5][move.getEndPosY()].setXpos(5);
-            }
 
-            boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
-            boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
-            boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
-            boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
-            
-//            hasChanged.set(!hasChanged.get());
-            return true;
-        //} else return false;
+    /**
+     * Uses a move object to modify the state of the board model
+     * @param move the move to be implemented
+     * @return true if successful
+     */
+    public boolean doMove(Move move) {
+        if (move.isCapture()) {
+            //
+        } else if (move.isCheck()) {
+            //
+        } else if (move.isCheckMate()) {
+            //TODO: write code here
+        } else if (move.isLongCastle()) {
+            boardGrid[3][move.getStartPosY()] = boardGrid[0][move.getStartPosY()];
+            boardGrid[0][move.getStartPosY()] = null;
+            boardGrid[3][move.getEndPosY()].setXpos(3);
+        } else if (move.isShortCastle()) {
+            boardGrid[5][move.getStartPosY()] = boardGrid[7][move.getStartPosY()];
+            boardGrid[7][move.getStartPosY()] = null;
+            boardGrid[5][move.getEndPosY()].setXpos(5);
+        }
+
+        boardGrid[move.getEndPosX()][move.getEndPosY()] = boardGrid[move.getStartPosX()][move.getStartPosY()];
+        boardGrid[move.getStartPosX()][move.getStartPosY()] = null;
+        boardGrid[move.getEndPosX()][move.getEndPosY()].setXpos(move.getEndPosX());
+        boardGrid[move.getEndPosX()][move.getEndPosY()].setYpos(move.getEndPosY());
+
+        return true;
     }
-    
+
+    /**
+     * Check whether or not a given move is valid for the current state of the board model
+     * @param move the move to be validated
+     * @return true if the move is valid
+     */
     public boolean isMoveValid(Move move) {
         Move[] validMoves = getPiece(move.getStartPosX(), move.getStartPosY()).getMoves(this);
         for (Move validMove : validMoves) {
@@ -114,14 +128,18 @@ public class Board implements Cloneable {
         }
         return false;
     }
-    
+
+    /**
+     * Generates a list of valid moves from the piece on the given location
+     * @param startPosX the horizontal array index of the piece (0-7)
+     * @param startPoxY the vertical array index of the piece (0-7)
+     * @return an array of valid moves for the piece at that location
+     */
     public Move[] getValidMoves(int startPosX, int startPoxY) {
         try {
             int currentColor = this.getPiece(startPosX, startPoxY).getColor();
             Move[] validMoves = boardGrid[startPosX][startPoxY].getMoves((Board) this.clone());
-            
-            //checkMovesForCheck(validMoves, currentColor);
-            //return validMoves;
+
             return refineMovesList(validMoves, currentColor);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,7 +193,9 @@ public class Board implements Cloneable {
         return refinedMoves;
     }
 
-    
+    /**
+     * Sets the board model state to that of a new game
+     */
     public void resetBoard() {
         boardGrid[0][0] = new Rook (0, 0, Piece.BLACK);
         boardGrid[1][0] = new Knight (1, 0, Piece.BLACK);
@@ -206,11 +226,10 @@ public class Board implements Cloneable {
         boardGrid[6][7] = new Knight (6, 7, Piece.WHITE);
         boardGrid[7][7] = new Rook (7, 7, Piece.WHITE);
     }
-    
-//    public void addListenerToChanged(ChangeListener l) {
-//        hasChanged.addListener(l);
-//    }
-    
+
+    /**
+     * Sets the check flag based on the current state of the board
+     */
     public void setCheckFlag() {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -229,68 +248,49 @@ public class Board implements Cloneable {
         }
         check = false;
     }
-    
-    public void setCheckMateFlag() {
-        int currentColor = Piece.WHITE;
-        checkMate = false;
-        ArrayList<Move> totalMoves = new ArrayList<>();
-        try {
-            for (int x = 0; x < 8; x++) {
-                for (int y = 0; y < 8; y++) {
-                    if (boardGrid[x][y] != null) {
-                        Move[] moves = boardGrid[x][y].getMoves((Board) this.clone());
-                        for (Move validMove : refineMovesList(moves, currentColor)) {
-                            totalMoves.add(validMove);
-                        }
-                    }
-                }
-            }
-            if (totalMoves.size() == 0) {
-                if (check) {
-                    checkMate = true;
-                    return;
-                } else {
-                    staleMate = true;
-                    return;
-                }
-            }
-            currentColor = Piece.BLACK;
-            totalMoves = new ArrayList<>();
-            for (int x = 0; x < 8; x++) {
-                for (int y = 0; y < 8; y++) {
-                    if (boardGrid[x][y] != null) {
-                        Move[] moves = boardGrid[x][y].getMoves((Board) this.clone());
-                        for (Move validMove : refineMovesList(moves, currentColor)) {
-                            totalMoves.add(validMove);
-                        }
-                    }
-                }
-            }
-            if (totalMoves.size() == 0) {
-                if (check) {
-                    checkMate = true;
-                    return;
-                } else {
-                    staleMate = true;
-                    return;
-                }
-            }
-            checkMate = false;
-            staleMate = false;
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+
+    /**
+     * Sets the mate flag for a given piece color based on the current state of the board
+     * @param pieceColor the color to check for mate for
+     */
+    public void setMateFlag(int pieceColor) {
+        if (pieceColor == Piece.WHITE) {
+            mate = false;
         }
-        
-        checkMate = false;
+        if (!mate) {
+            for (int x = 0; x < 8; ++x) {
+                for (int y = 0; y < 8; ++y) {
+                    if (boardGrid[x][y] != null &&
+                            boardGrid[x][y].getColor() == pieceColor) {
+                        if (this.getValidMoves(x, y).length > 0) {
+                            mate = false;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        mate = true;
     }
-    
-    public boolean isCheck() { return check; }
-    public boolean isCheckMate() { return checkMate; }
-    public boolean isStaleMate() { return staleMate; }
+
+    /**
+     * Returns whether or not either king is in check
+     * @return true if either king is in check
+     */
+    public boolean isCheck() {
+        return check;
+    }
+
+    /**
+     * Returns whether or not either player cannot move
+     * @return true if either player cannot move
+     */
+    public boolean isMate() {
+        return mate;
+    }
     
     private Piece[][] boardGrid;
     private boolean check;
-    private boolean checkMate;
-    private boolean staleMate;
-//    private SimpleBooleanProperty hasChanged;
+    private boolean mate;
 }

@@ -49,7 +49,11 @@ import mmchess.client.model.Rook;
  * @author Matthew
  */
 public class Controller implements Initializable, Observer {
-    
+    /**
+     * Initializes the GUI to a starting state
+     * @param url
+     * @param rb blah-dee blah-dee blah
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         int x = 0;
@@ -74,16 +78,6 @@ public class Controller implements Initializable, Observer {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-//        currentBoard.addListenerToChanged(new ChangeListener<Boolean>() {
-//
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, 
-//                    Boolean oldValue, Boolean newValue) {
-//                updateBoard();
-//            }
-//            
-//        });
-        
         //model.addObserverToBoard(this);
         connection = new Connection(this);
         
@@ -97,13 +91,19 @@ public class Controller implements Initializable, Observer {
         fiveSecondsWonder.play();
     }
 
+    /**
+     * Updates the board model using input from server
+     * @param o the class that notified
+     * @param arg the object sent from the server
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Move) {
             // update board state/GUI
             model.doMove((Move)arg);
             model.getBoard().setCheckFlag();
-            model.getBoard().setCheckMateFlag();
+            model.getBoard().setMateFlag(Piece.WHITE);
+            model.getBoard().setMateFlag(Piece.BLACK);
             //updateBoard();
         } else if (arg instanceof String) {
             if (((String)arg).equals("TRN")) {
@@ -115,13 +115,19 @@ public class Controller implements Initializable, Observer {
             }
         }
     }
-    
+
+    /**
+     * Exits the Platform
+     */
     @FXML
     public void exitApplication()
     {
         Platform.exit();
     }
-    
+
+    /**
+     * Sets GUI and board model to new game set up
+     */
     @FXML
     public void newGame() {
         model.newGame();
@@ -159,7 +165,10 @@ public class Controller implements Initializable, Observer {
             movesListObservable.remove(0);
         }
     }
-    
+
+    /**
+     * Updates the GUI by reading the state of the board model
+     */
     @FXML
     public void updateBoard() {
         try {
@@ -212,7 +221,7 @@ public class Controller implements Initializable, Observer {
                 } 
             }
         }
-        
+        // orient board to piece color
         if (model.getPlayerColor() == Piece.BLACK) {
             boardGrid.setRotate(180);
             for (int i = 0; i < 8; i++) {
@@ -232,7 +241,7 @@ public class Controller implements Initializable, Observer {
             bottomPlayerIcon.setImage(whiteKing);
             topPlayerIcon.setImage(blackKing);
         }
-        
+        // set proper turn indicator
         if (model.isPlayerTurn()) {
             bottomTurnLight.setImage(turnIconOn);
             topTurnLight.setImage(turnIconOff);
@@ -240,24 +249,27 @@ public class Controller implements Initializable, Observer {
             bottomTurnLight.setImage(turnIconOff);
             topTurnLight.setImage(turnIconOn);
         }
-        
+        // remove old status label and set new one (check/checkmate)
         while(statusBox.getChildren().size() > 0) {
             statusBox.getChildren().remove(0);
         }
-        if (model.getBoard().isCheckMate()) {
+        if (model.getBoard().isCheck() && model.getBoard().isMate()) {
             statusBox.getChildren().add(new Label("Checkmate!"));
-        } else if (model.getBoard().isStaleMate()) {
-            statusBox.getChildren().add(new Label("Stalemate..."));
         } else if (model.getBoard().isCheck()) {
             statusBox.getChildren().add(new Label("Check"));
+        } else if (model.getBoard().isMate()) {
+            statusBox.getChildren().add(new Label("Stalemate..."));
         }
-        
         if (statusBox.getChildren().size() > 0) {
             ((Label)statusBox.getChildren().get(0)).setAlignment(Pos.CENTER);
             ((Label)statusBox.getChildren().get(0)).setFont(Font.font("System", 18));
         }
     }
-    
+
+    /**
+     * Updates the GUI when a cell is clicked
+     * @param e event of the clicked cell
+     */
     @FXML
     public void clickCell(Event e) {
         if (selectedCell == null) { 
@@ -313,11 +325,13 @@ public class Controller implements Initializable, Observer {
                     }
                 }
             }
-            
-            
         }
     }
-    
+
+    /**
+     * Uses a move object to modify the state of the board model
+     * @param move the move to be implemented
+     */
     public void doMove(Move move) {
         // model.doMove(move);
         

@@ -13,6 +13,11 @@ public class InputTarget extends Observable implements Runnable {
     private ObjectInputStream inputStream;
     private boolean isRunning = true;
 
+    /**
+     * Constructor for the target, can be passed into a thread and ran
+     * @param controller the controller observing this
+     * @param inputStream the client's object input stream
+     */
     public InputTarget(Controller controller, ObjectInputStream inputStream) {
         this.inputStream = inputStream;
         addObserver(controller);
