@@ -15,7 +15,6 @@ import java.net.Socket;
 public class MatchTarget implements Runnable{
     private ObjectInputStream p1In, p2In;
     private ObjectOutputStream p1Out, p2Out;
-//    private Board board;
     private int turn;
 
     /**
@@ -38,10 +37,8 @@ public class MatchTarget implements Runnable{
         } catch (IOException e) {
             System.out.printf("%s\n", "Failed to initialize players' colors.");
             e.printStackTrace();
-            //close();
         }
         // initialize turn counter
-//        board = new Board();
         turn = 0;
     }
 
@@ -51,47 +48,65 @@ public class MatchTarget implements Runnable{
      */
     @Override
     public void run() {
-        Move move;
+        Object in;
         try {
             while (true) {
                 if (turn%2 == 0) {
                     // get p1's move
-//                    do {
-                        System.out.println("Sending TRN key"); 
-                        p1Out.writeObject("TRN");
-                        System.out.println("Waiting on p1 move");
-                        move = (Move) p1In.readObject();
+                    System.out.println("Sending TRN key");
+                    p1Out.writeObject("TRN");
+                    System.out.println("Waiting on p1 move");
+
+                    in = p1In.readObject();
+                    if (in instanceof Move) {
                         System.out.println("p1 move received, sending to both clients");
-//                    } while (!board.doMove(move));
-                    // send p1's move to clients
-                    p1Out.writeObject(move);
-                    p2Out.writeObject(move);
-                    System.out.println("Move sent to both clients");
-                    // increment turn counter
-                    turn++;
-                    System.out.println("turn incremented = " + turn);
+                        // send p1's move to clients
+                        p1Out.writeObject(in);
+                        p2Out.writeObject(in);
+                        System.out.println("Move sent to both clients");
+                        // increment turn counter
+                        turn++;
+                        System.out.println("turn incremented = " + turn);
+                    } else if (in instanceof String) {
+                        if (in.equals("NEW")) {
+                            System.out.println("New game request received, resetting clients");
+                            // send p1's new game request
+                            p1Out.writeObject(in);
+                            p2Out.writeObject(in);
+                            System.out.println("Both clients reset");
+                            turn = 0;
+                        }
+                    }
                 } else if (turn%2 == 1) {
                     // get p2's move
-//                    do {
-                        System.out.println("Sending TRN key"); 
-                        p2Out.writeObject("TRN");
-                        System.out.println("Waiting on p2 move");
-                        move = (Move) p2In.readObject();
+                    System.out.println("Sending TRN key");
+                    p2Out.writeObject("TRN");
+                    System.out.println("Waiting on p2 move");
+
+                    in = p2In.readObject();
+                    if (in instanceof Move) {
                         System.out.println("p2 move received, sending to both clients");
-//                    } while (!board.doMove(move));
-                    // send p2's move to clients
-                    p1Out.writeObject(move);
-                    p2Out.writeObject(move);
-                    System.out.println("Move sent to both clients");
-                    // increment turn counter
-                    turn++;
-                    System.out.println("turn incremented = " + turn);
+                        // send p2's move to clients
+                        p1Out.writeObject(in);
+                        p2Out.writeObject(in);
+                        System.out.println("Move sent to both clients");
+                        // increment turn counter
+                        turn++;
+                        System.out.println("turn incremented = " + turn);
+                    } else if (in instanceof String) {
+                        if (in.equals("NEW")) {
+                            System.out.println("New game request received, resetting clients");
+                            // send p2's new game request
+                            p1Out.writeObject(in);
+                            p2Out.writeObject(in);
+                            System.out.println("Both clients reset");
+                            turn = 0;
+                        }
+                    }
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

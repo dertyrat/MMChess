@@ -113,6 +113,8 @@ public class Controller implements Initializable, Observer {
                 model.setPlayerColor(Piece.WHITE);
             } else if (((String)arg).equals("CLR B")) {
                 model.setPlayerColor(Piece.BLACK);
+            } else if (((String)arg).equals("NEW")) {
+                model.newGame();
             }
         }
     }
@@ -131,49 +133,51 @@ public class Controller implements Initializable, Observer {
      */
     @FXML
     public void newGame() {
-        model.newGame();
-        
-        boardCells[0][0].setImage(Controller.blackRook);
-        boardCells[1][0].setImage(Controller.blackKnight);
-        boardCells[2][0].setImage(Controller.blackBishop);
-        boardCells[3][0].setImage(Controller.blackQueen);
-        boardCells[4][0].setImage(Controller.blackKing);
-        boardCells[5][0].setImage(Controller.blackBishop);
-        boardCells[6][0].setImage(Controller.blackKnight);
-        boardCells[7][0].setImage(Controller.blackRook);
-        
-        for (int i = 0; i < 8; i++) {
-            boardCells[i][1].setImage(Controller.blackPawn);
-            boardCells[i][6].setImage(Controller.whitePawn);
-        }
-        
-        for (int i = 2; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                boardCells[j][i].setImage(null);
-            }
-        }
-        
-        boardCells[0][7].setImage(Controller.whiteRook);
-        boardCells[1][7].setImage(Controller.whiteKnight);
-        boardCells[2][7].setImage(Controller.whiteBishop);
-        boardCells[3][7].setImage(Controller.whiteQueen);
-        boardCells[4][7].setImage(Controller.whiteKing);
-        boardCells[5][7].setImage(Controller.whiteBishop);
-        boardCells[6][7].setImage(Controller.whiteKnight);
-        boardCells[7][7].setImage(Controller.whiteRook);
-        
-        while (movesListObservable.size() > 0) {
-            movesListObservable.remove(0);
-        }
-        while (topGraveyard.getChildren().size() > 0) {
-            topGraveyard.getChildren().remove(0);
-        }
-        while (bottomGraveyard.getChildren().size() > 0) {
-            bottomGraveyard.getChildren().remove(0);
-        }
-        while(statusBox.getChildren().size() > 0) {
-            statusBox.getChildren().remove(0);
-        }
+        connection.sendMove("NEW");
+
+//        model.newGame();
+//
+//        boardCells[0][0].setImage(Controller.blackRook);
+//        boardCells[1][0].setImage(Controller.blackKnight);
+//        boardCells[2][0].setImage(Controller.blackBishop);
+//        boardCells[3][0].setImage(Controller.blackQueen);
+//        boardCells[4][0].setImage(Controller.blackKing);
+//        boardCells[5][0].setImage(Controller.blackBishop);
+//        boardCells[6][0].setImage(Controller.blackKnight);
+//        boardCells[7][0].setImage(Controller.blackRook);
+//
+//        for (int i = 0; i < 8; i++) {
+//            boardCells[i][1].setImage(Controller.blackPawn);
+//            boardCells[i][6].setImage(Controller.whitePawn);
+//        }
+//
+//        for (int i = 2; i < 6; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                boardCells[j][i].setImage(null);
+//            }
+//        }
+//
+//        boardCells[0][7].setImage(Controller.whiteRook);
+//        boardCells[1][7].setImage(Controller.whiteKnight);
+//        boardCells[2][7].setImage(Controller.whiteBishop);
+//        boardCells[3][7].setImage(Controller.whiteQueen);
+//        boardCells[4][7].setImage(Controller.whiteKing);
+//        boardCells[5][7].setImage(Controller.whiteBishop);
+//        boardCells[6][7].setImage(Controller.whiteKnight);
+//        boardCells[7][7].setImage(Controller.whiteRook);
+//
+//        while (movesListObservable.size() > 0) {
+//            movesListObservable.remove(0);
+//        }
+//        while (topGraveyard.getChildren().size() > 0) {
+//            topGraveyard.getChildren().remove(0);
+//        }
+//        while (bottomGraveyard.getChildren().size() > 0) {
+//            bottomGraveyard.getChildren().remove(0);
+//        }
+//        while(statusBox.getChildren().size() > 0) {
+//            statusBox.getChildren().remove(0);
+//        }
     }
 
     /**

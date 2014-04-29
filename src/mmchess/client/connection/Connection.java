@@ -58,7 +58,7 @@ public class Connection {
      * Send a move object to the server
      * @param move the move to be sent
      */
-    public void sendMove(Move move) {
+    public void sendMove(Object move) {
         try {
             outputStream.writeObject(move);
         } catch (IOException e) {
