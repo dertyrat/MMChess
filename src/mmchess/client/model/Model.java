@@ -39,7 +39,7 @@ public class Model {
     }
     
     public Move[] getValidMoves(int startPosX, int startPosY) {
-        return gameBoard.getPiece(startPosX, startPosY).getMoves(gameBoard);
+        return gameBoard.getValidMoves(startPosX, startPosY);
     }
     
     public boolean isMoveValid(Move move) {

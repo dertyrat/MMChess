@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -41,7 +43,7 @@ import mmchess.client.model.Queen;
 import mmchess.client.model.Rook;
 
 /**
- *
+ * 
  * @author Matthew
  */
 public class Controller implements Initializable, Observer {
@@ -63,7 +65,11 @@ public class Controller implements Initializable, Observer {
         }
         movesListObservable = movesList.getChildren();
         model = new Model();
-        currentBoard = model.getBoard();
+        try {
+            currentBoard = (Board) model.getBoard().clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
 //        currentBoard.addListenerToChanged(new ChangeListener<Boolean>() {
 //
@@ -150,7 +156,12 @@ public class Controller implements Initializable, Observer {
     }
     
     @FXML
-    public void updateBoard() {        
+    public void updateBoard() {
+        try {
+            currentBoard = (Board) model.getBoard().clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Piece currentPiece = currentBoard.getPiece(x, y);
@@ -264,14 +275,15 @@ public class Controller implements Initializable, Observer {
             
             for (Move move : validMoves) {
                 if (move.equals(newMove)) {
-                    newMove = move;
+                    //newMove = move;
+                    if (model.isMoveValid(move)) {
+                        connection.sendMove(move);
+                        model.setPlayerTurn(false);
+                    }
                 }
             }
             
-            if (model.isMoveValid(newMove)) {
-                connection.sendMove(newMove);
-                model.setPlayerTurn(false);
-            }
+            
         }
     }
     
