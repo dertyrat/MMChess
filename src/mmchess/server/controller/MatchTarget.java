@@ -15,7 +15,7 @@ import java.net.Socket;
 public class MatchTarget implements Runnable{
     private ObjectInputStream p1In, p2In;
     private ObjectOutputStream p1Out, p2Out;
-    private Board board;
+//    private Board board;
     private int turn;
 
     /**
@@ -26,7 +26,7 @@ public class MatchTarget implements Runnable{
      * @param p2Out player 2's output stream
      */
     public MatchTarget(ObjectInputStream p1In, ObjectOutputStream p1Out, ObjectInputStream p2In, ObjectOutputStream p2Out) {
-        // initialize sockets
+        // initialize streams
         this.p1In = p1In;
         this.p1Out = p1Out;
         this.p2In = p2In;
@@ -56,36 +56,36 @@ public class MatchTarget implements Runnable{
             while (true) {
                 if (turn%2 == 0) {
                     // get p1's move
-                    do {
+//                    do {
                         System.out.println("Sending TRN key"); 
                         p1Out.writeObject("TRN");
                         System.out.println("Waiting on p1 move");
                         move = (Move) p1In.readObject();
                         System.out.println("p1 move received, sending to both clients");
-                    } while (!board.doMove(move));
+//                    } while (!board.doMove(move));
                     // send p1's move to clients
                     p1Out.writeObject(move);
                     p2Out.writeObject(move);
                     System.out.println("Move sent to both clients");
                     // increment turn counter
                     turn++;
-                    System.out.println("turn incremented");
+                    System.out.println("turn incremented = " + turn);
                 } else if (turn%2 == 1) {
                     // get p2's move
-                    do {
+//                    do {
                         System.out.println("Sending TRN key"); 
                         p2Out.writeObject("TRN");
                         System.out.println("Waiting on p2 move");
                         move = (Move) p2In.readObject();
                         System.out.println("p2 move received, sending to both clients");
-                    } while (!board.doMove(move));
+//                    } while (!board.doMove(move));
                     // send p2's move to clients
                     p1Out.writeObject(move);
                     p2Out.writeObject(move);
                     System.out.println("Move sent to both clients");
                     // increment turn counter
                     turn++;
-                    System.out.println("turn incremented");
+                    System.out.println("turn incremented = " + turn);
                 }
             }
 
