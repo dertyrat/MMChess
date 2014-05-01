@@ -19,11 +19,17 @@ package mmchess.client.model;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matthew
+ * Defines the Knight and its behavior.
+ * @author Matthew McGuire
  */
 public class Knight extends Piece {
 
+    /**
+     * Constructs the Knight
+     * @param xpos x-axis position
+     * @param ypos y-axis position
+     * @param color piece's color
+     */
     public Knight(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
     }

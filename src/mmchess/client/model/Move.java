@@ -16,18 +16,22 @@
 
 package mmchess.client.model;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.Socket;
 
 /**
- *
- * @author Matthew
+ * The move tracks the starting and ending of a chess move as well as all of the
+ * special types of moves (such as a capture, castle, or check).
+ * @author Matthew McGuire
  */
 public class Move implements Serializable {
 
+    /**
+     * Constructor of the Move for when the Piece type is not known.
+     * @param startPosX starting x-axis position
+     * @param startPosY starting y-axis position
+     * @param endPosX ending x-axis position
+     * @param endPosY ending y-axis position
+     */
     public Move(int startPosX, int startPosY, int endPosX, int endPosY) {
         this.startPosX = startPosX;
         this.startPosY = startPosY;
@@ -42,23 +46,40 @@ public class Move implements Serializable {
         rowNames = new char[]{'8','7','6','5','4','3','2','1'};
         colNames = new char[]{'a','b','c','d','e','f','g','h'};
     }
-    
+    /**
+     * Constructor of the Move for when the Piece type is not known.
+     * @param pieceType the Class of the piece that is instantiating the move
+     * @param startPosX starting x-axis position
+     * @param startPosY starting y-axis position
+     * @param endPosX ending x-axis position
+     * @param endPosY ending y-axis position
+     */
     public Move(Class pieceType, int startPosX, int startPosY, int endPosX, int endPosY) {
         this(startPosX, startPosY, endPosX, endPosY);
         this.pieceType = pieceType;
     }
     
+    /**
+     * Checks to see of two moves are the same based on their starting and 
+     * ending x-axis and y-axis positions.
+     * @param o other move
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
-        try {
+        if (o.getClass() == Move.class)
+        {
             Move other = (Move)o;
             if (this.hashCode() == other.hashCode()) return true;
-            else return false;
-        } catch (ClassCastException e) {
-            return false;
         }
+        return false;
     }
-
+    
+    /**
+     * Returns a hash code value for the object.
+     * @return a hash code value for this object.
+     * @see java.lang.Object#hashCode
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -69,6 +90,11 @@ public class Move implements Serializable {
         return hash;
     }
 
+    /**
+     * Returns a string representation of the using a loose interpretation of
+     * the expanded algebraic method of representing chess moves.
+     * @return A string representation of the move.
+     */
     @Override
     public String toString() {
         if (shortCastle) return "O-O";
@@ -98,58 +124,114 @@ public class Move implements Serializable {
         }
     }
     
+    /**
+     * Gets the starting x-axis position
+     * @return x-axis position
+     */
     public int getStartPosX() {
         return startPosX;
     }
 
+    /**
+     * Gets the starting y-axis position
+     * @return y-axis position
+     */
     public int getStartPosY() {
         return startPosY;
     }
 
+    /**
+     * Gets the final x-axis position
+     * @return x-axis position
+     */
     public int getEndPosX() {
         return endPosX;
     }
 
+    /**
+     * Gets the final y-axis position
+     * @return y-axis position
+     */
     public int getEndPosY() {
         return endPosY;
     }
     
+    /**
+     * Returns whether the capture flag has been set.
+     * @return the capture flag
+     */
     public boolean isCapture() {
         return capture;
     }
 
-    public void setCapture(boolean capture) {
-        this.capture = capture;
-    }
-
+    /**
+     * Returns whether the long-castle flag has been set.
+     * @return the long-castle flag
+     */
     public boolean isLongCastle() {
         return longCastle;
     }
 
-    public void setLongCastle(boolean longCastle) {
-        this.longCastle = longCastle;
-    }
-
+    /**
+     * Returns whether the short-castle flag has been set.
+     * @return the short-castle flag
+     */
     public boolean isShortCastle() {
         return shortCastle;
     }
 
-    public void setShortCastle(boolean shortCastle) {
-        this.shortCastle = shortCastle;
-    }
-
+    /**
+     * Returns whether the Check flag has been set.
+     * @return the Check flag
+     */
     public boolean isCheck() {
         return check;
     }
 
+    /**
+     * Returns whether the Checkmate flag has been set.
+     * @return the Checkmate flag
+     */
+    public boolean isCheckMate() {
+        return checkMate;
+    }
+    
+    /**
+     * Sets the Capture flag.
+     * @param capture value to set the capture flag
+     */
+    public void setCapture(boolean capture) {
+        this.capture = capture;
+    }
+
+    /**
+     * Sets the Long-Castle flag.
+     * @param longCastle value to set the Long-Castle flag
+     */
+    public void setLongCastle(boolean longCastle) {
+        this.longCastle = longCastle;
+    }
+
+    /**
+     * Sets the Short-Castle flag.
+     * @param shortCastle value to set the Short-Castle flag
+     */
+    public void setShortCastle(boolean shortCastle) {
+        this.shortCastle = shortCastle;
+    }
+
+    /**
+     * Sets the Check flag.
+     * @param check value to set the Check flag
+     */
     public void setCheck(boolean check) {
         this.check = check;
     }
 
-    public boolean isCheckMate() {
-        return checkMate;
-    }
-
+    /**
+     * Sets the CheckMate flag.
+     * @param checkMate value to set the Checkmate flag
+     */
     public void setCheckMate(boolean checkMate) {
         this.checkMate = checkMate;
     }

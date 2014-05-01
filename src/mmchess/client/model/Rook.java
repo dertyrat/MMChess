@@ -19,29 +19,39 @@ package mmchess.client.model;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matthew
+ * Defines the Rook piece
+ * @author Matthew McGuire
  */
 public class Rook extends Piece {
 
+    /**
+     * Constructs the Rook
+     * @param xpos x-axis position
+     * @param ypos y-axis position
+     * @param color piece's color
+     */
     public Rook(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
         canCastle = true;
     }
     
-    public boolean canCastle() {
+    /**
+     * returns whether the Rook can castle (it cannot castle if it has moved)
+     * @return boolean
+     */
+    public boolean canCastle() { 
         return canCastle;
     }
     
     @Override
     public void setYpos(int ypos) { 
-        super.ypos = ypos;
+        super.setYpos(ypos);
         this.canCastle = false;
     }
     
     @Override
     public void setXpos(int xpos) {
-        this.xpos = xpos;
+        super.setYpos(xpos);
         this.canCastle = false;
     }
 

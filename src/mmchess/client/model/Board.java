@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Defines the board of the chess game and stores all of the pieces.
+ * @author Matthew McGuire
+ */
 public class Board implements Cloneable {
     /**
      * Constructor for the board model, initializes the fields
@@ -219,7 +222,7 @@ public class Board implements Cloneable {
         
         for (int i = 2; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
-                boardGrid[j][i] = Piece.EMPTY;
+                boardGrid[j][i] = null;
             }
         }
         
@@ -297,9 +300,9 @@ public class Board implements Cloneable {
     }
     
     /**
-     * Returns the last move that was done by either player and resets the value
+     * Returns the most recently performed move and resets the value to null.
      * to null.
-     * @return Move
+     * @return the last move or null
      */
     public Move popLastMove() {
         Move temp = lastMove;
@@ -307,6 +310,10 @@ public class Board implements Cloneable {
         return temp;
     }
     
+    /**
+     * Returns the most recently captured piece and resets the value to null.
+     * @return the last piece that was captured or null
+     */
     public Piece popLastCapturedPiece() {
         Piece temp = lastCapture;
         lastCapture = null;

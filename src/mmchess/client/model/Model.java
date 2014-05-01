@@ -17,7 +17,7 @@
 package mmchess.client.model;
 
 /**
- *
+ * Define the Model of the Chess program. 
  * @author Matthew
  */
 public class Model {

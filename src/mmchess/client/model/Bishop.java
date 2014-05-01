@@ -24,6 +24,12 @@ import java.util.ArrayList;
  */
 public class Bishop extends Piece {
 
+    /**
+     * Construct a new Bishop
+     * @param xpos x-axis position of the piece
+     * @param ypos y-axis position of the piece
+     * @param color color of the piece
+     */
     public Bishop(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
     }

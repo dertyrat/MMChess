@@ -19,11 +19,17 @@ package mmchess.client.model;
 import java.util.ArrayList;
 
 /**
- *
+ * Defines the Pawn and its behavior.
  * @author Matthew
  */
 public class Pawn extends Piece {
 
+    /** 
+     * Constructs the new pawn.
+     * @param xpos x-axis position
+     * @param ypos y-axis position
+     * @param color Pawn's color
+     */
     public Pawn(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
         

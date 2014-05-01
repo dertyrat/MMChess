@@ -19,11 +19,17 @@ package mmchess.client.model;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matthew
+ * Defines the Queen and its behavior.
+ * @author Matthew McGuire
  */
 public class Queen extends Piece {
 
+    /**
+     * Constructs the Queen
+     * @param xpos x-axis position
+     * @param ypos y-axis position
+     * @param color Queens' color
+     */
     public Queen(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
     }

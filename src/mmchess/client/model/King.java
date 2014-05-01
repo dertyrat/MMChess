@@ -19,29 +19,39 @@ package mmchess.client.model;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matthew
+ * Defines the King piece.
+ * @author Matthew McGuire
  */
 public class King extends Piece {
 
+    /**
+     * Constructor for the King class
+     * @param xpos x-axis position
+     * @param ypos y-axis position
+     * @param color the King's color
+     */
     public King(int xpos, int ypos, int color) {
         super(xpos, ypos, color);
         canCastle = true;
     }
     
+    /**
+     * returns whether the King can castle (it cannot castle if it has moved)
+     * @return boolean
+     */
     public boolean canCastle() {
         return canCastle;
     }
     
     @Override
     public void setYpos(int ypos) { 
-        super.ypos = ypos;
+        super.setYpos(ypos);
         this.canCastle = false;
     }
     
     @Override
     public void setXpos(int xpos) {
-        this.xpos = xpos;
+        super.setXpos(xpos);
         this.canCastle = false;
     }
 

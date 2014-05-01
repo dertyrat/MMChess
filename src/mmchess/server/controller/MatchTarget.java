@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
  * @author Travis Meares
  */
 public class MatchTarget implements Runnable{
+
     public static final String PROTOCOL_NEWGAME = "NEW";
     public static final String PROTOCOL_TURN = "TRN";
     public static final String PROTOCOL_WHITE = "CLR W";
